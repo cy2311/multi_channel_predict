@@ -18,8 +18,12 @@ resume_training.py
 zernike_coefficients_dataset_plot.py
 zernike_coefficients_plot.py
 
+# 屏蔽md file
+README_MEMORY_OPTIMIZATION.md
+README_RESUME_TRAINING.md
 
 # 屏蔽所有的npy文件
+*.pdf
 *.npy
 *.tiff
 *.h5

@@ -1,0 +1,13 @@
+{
+  "cam_pth": "C:/Cameras/Camera_P95B/cam_specs_p95b16_A21G203014.pkl",
+  "view_type": "dualview",
+  "chipszh": 1200,
+  "chipszw": 1200,
+  "cam_pxszx": 101.11,
+  "cam_pxszy": 98.83,
+  "scmos_var": false,
+  "offset": 99.78090423787435,
+  "var": 3.3170624029816382,
+  "A2D": 1.020784562122306,
+  "EMGain": 1.0
+}
