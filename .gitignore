@@ -1,0 +1,27 @@
+# 屏蔽特定文件夹
+INSPR/
+DECODE/
+nn_train/
+nn_train_loc/
+nn_train_loc_back/
+beads/
+uiPSF/
+
+# 屏蔽特定文件
+emitters.h5
+memory_log.csv
+
+# 屏蔽所有的npy文件
+*.npy
+*.tiff
+*.h5
+*.png
+# 模型文件
+*.pth
+*.pt
+*.ckpt
+*.model
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar

@@ -1,0 +1,61 @@
+{
+  "optical": {
+    "wavelength_nm": 660,
+    "pixel_size_nm_x": 101.11,
+    "pixel_size_nm_y": 98.83,
+    "NA": 1.4,
+    "n_medium": 1.518,
+    "psf_patch_size": 9,
+    "max_noll_coeffs": 21,
+    "defocus_noll_index": 4,
+    "ao_strength_factor": 0.05
+  },
+  "emitter": {
+    "n_emitters": 10000,
+    "total_photons": 2000,
+    "full_roi_size": 1200,
+    "emitter_on_prob": 0.6,
+    "min_z_um": -0.5,
+    "max_z_um": 0.5
+  },
+  "photophysics": {
+    "T_ON": 3.0,
+    "T_DARK": 2.5, 
+    "T_BLEACH": 1.5,
+    "quantum_yield": 0.8,
+    "laser_power_w_cm2": 100.0,
+    "molar_extinction_coeff": 50000,
+    "wavelength_nm": 660,
+    "sub_frame_resolution": 10
+  },
+  "camera": {
+    "qe": 0.9,
+    "read_noise_e": 74.4,
+    "spurious_charge": 0.002,
+    "em_gain": 1.0,
+    "e_adu": 1.020784562122306,
+    "baseline": 99.78090423787435,
+    "max_adu": 65535,
+    "autofluorescence_background": 50
+  },
+  "simulation": {
+    "n_frames": 50,
+    "n_samples": 1,
+    "output_dir": "simulated_data",
+    "random_seed": 42
+  },
+  "psf": {
+    "type": "zernike",
+    "zernike_coefficients": {
+      "4": 0.1,
+      "5": 0.05,
+      "6": 0.03
+    }
+  },
+  "experiment": {
+    "name": "default_experiment",
+    "description": "Default microscopy simulation experiment",
+    "date": "2024-01-01",
+    "version": "1.0"
+  }
+} 
