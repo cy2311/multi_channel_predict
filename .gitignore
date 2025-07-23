@@ -10,6 +10,14 @@ uiPSF/
 # 屏蔽特定文件
 emitters.h5
 memory_log.csv
+phase_retrieval_gs.py
+phase_retrieval_gs copy.py
+pre_processing_dataset.py
+pre_procesiing.py
+resume_training.py
+zernike_coefficients_dataset_plot.py
+zernike_coefficients_plot.py
+
 
 # 屏蔽所有的npy文件
 *.npy
