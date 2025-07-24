@@ -45,12 +45,12 @@ PATCH_XY = 25  # 补丁XY尺寸
 MIN_DISTANCE = 25  # 发射体之间的最小距离
 
 # 相位恢复参数
-CENTER_SLICE = 75  # 中心帧索引
+CENTER_SLICE =101  # 中心帧索引
 STEP = 2  # 帧间隔
 N_EACH_SIDE = 20  # 中心两侧各取的帧数
-ITER_MAX = 100  # 最大迭代次数
+ITER_MAX = 50  # 最大迭代次数
 NCC_THRESHOLD = 0.85  # 早停NCC阈值
-SIGMA_OTF = 2  # 可视化时的高斯模糊sigma
+SIGMA_OTF = 1  # 可视化时的高斯模糊sigma
 
 # 创建输出目录
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -102,7 +102,7 @@ def detect_emitters(stack, n_emitters=100, min_distance=MIN_DISTANCE):
     coords = peak_local_max(
         mip_smooth,
         min_distance=min_distance,
-        threshold_abs=np.percentile(mip_smooth, 99),
+        threshold_abs=np.percentile(mip_smooth, 98),
         num_peaks=n_emitters,
     )
     # peak_local_max返回(row,col)
@@ -424,7 +424,7 @@ def run_gs_phase_retrieval(meas_psfs, cfg):
 
     # 离焦相位因子：
     #   H(z) = exp(i * pi * wavelength * z * (FX^2 + FY^2))  [Fresnel近似]
-    z_list_m = (np.arange(-N_EACH_SIDE, N_EACH_SIDE + 1) * 30e-9)  # 30nm间隔
+    z_list_m = (np.arange(-N_EACH_SIDE, N_EACH_SIDE + 1) * 20e-9)  # 20nm间隔
     defocus_phases = [np.exp(1j * math.pi * wavelength * z * RHO2) for z in z_list_m]
 
     # 初始化
@@ -760,7 +760,7 @@ def main():
     
     # 检测发射体
     logger.info('Detecting emitters...')
-    emitter_coords = detect_emitters(stack, n_emitters=100, min_distance=MIN_DISTANCE)
+    emitter_coords = detect_emitters(stack, n_emitters=300, min_distance=MIN_DISTANCE)
     logger.info(f'Detected {len(emitter_coords)} emitter candidates')
     
     # 过滤太近的发射体
@@ -815,8 +815,15 @@ def main():
                 # 运行相位恢复
                 P, final_psf_stack, final_ncc = run_gs_phase_retrieval(frames_selected, cfg)
                 
-                # 应用OTF高斯低通
-                mod_psf_stack = apply_otf_gaussian_lowpass(final_psf_stack, frames_selected)
+                # 检查NCC阈值，只有达到0.7才保存
+                if final_ncc < 0.7:
+                    logger.info(f'Emitter {idx+1} NCC ({final_ncc:.4f}) below threshold 0.7, skipping save')
+                    continue
+                
+                # 跳过OTF高斯低通滤波处理
+                # mod_psf_stack = apply_otf_gaussian_lowpass(final_psf_stack, frames_selected)
+                logger.info('Skipping OTF Gaussian low-pass regularization...')
+                mod_psf_stack = final_psf_stack  # 直接使用原始的PSF堆栈
                 
                 # 构建瞳孔掩码 - 与相位恢复中使用的掩码相同(128x128)
                 N_freq = 128  # 与Zernike基底相同的尺寸

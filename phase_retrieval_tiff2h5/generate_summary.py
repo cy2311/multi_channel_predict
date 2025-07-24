@@ -17,11 +17,11 @@ images = [
 ]
 
 titles = [
-    'PSF对比', 
-    '5帧PSF对比', 
-    'Zernike系数', 
-    '随机发射体Zernike系数', 
-    'Zernike相位图'
+    'PSF Comparision', 
+    '5 Frames PSF Comparision', 
+    'Zernike Coeffs', 
+    'Random Selected Emitter Zernike Coeffs', 
+    'Zernike Phase Maps'
 ]
 
 # 创建图像网格
