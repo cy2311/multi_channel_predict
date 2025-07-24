@@ -45,7 +45,7 @@ PATCH_XY = 25  # 补丁XY尺寸
 MIN_DISTANCE = 25  # 发射体之间的最小距离
 
 # 相位恢复参数
-CENTER_SLICE =101  # 中心帧索引
+CENTER_SLICE =80  # 中心帧索引
 STEP = 2  # 帧间隔
 N_EACH_SIDE = 20  # 中心两侧各取的帧数
 ITER_MAX = 50  # 最大迭代次数
