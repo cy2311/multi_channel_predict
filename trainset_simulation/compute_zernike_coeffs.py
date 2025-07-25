@@ -53,6 +53,16 @@ def compute_mag_coeffs(coords: np.ndarray, coeff_mag_patch: np.ndarray, em_xy: n
         mask = np.isnan(vals)
         if np.any(mask):
             vals[mask] = interp.griddata(coords, coeff_mag_patch[:, idx], em_xy[mask], method='nearest')
+        
+        # Additional check: if still NaN after nearest interpolation, use default value
+        mask_still_nan = np.isnan(vals)
+        if np.any(mask_still_nan):
+            # Use the mean of valid coefficients as default, or 0 if all are NaN
+            valid_coeffs = coeff_mag_patch[:, idx][~np.isnan(coeff_mag_patch[:, idx])]
+            default_val = np.mean(valid_coeffs) if len(valid_coeffs) > 0 else 0.0
+            vals[mask_still_nan] = default_val
+            print(f"Warning: {np.sum(mask_still_nan)} NaN values found in coefficient {idx}, replaced with {default_val}")
+        
         mag_coeffs[:, idx] = vals.astype(np.float32)
     return mag_coeffs
 

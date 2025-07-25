@@ -815,9 +815,9 @@ def main():
                 # 运行相位恢复
                 P, final_psf_stack, final_ncc = run_gs_phase_retrieval(frames_selected, cfg)
                 
-                # 检查NCC阈值，只有达到0.7才保存
-                if final_ncc < 0.7:
-                    logger.info(f'Emitter {idx+1} NCC ({final_ncc:.4f}) below threshold 0.7, skipping save')
+                # 检查NCC阈值，只有达到0.8才保存
+                if final_ncc < 0.8:
+                    logger.info(f'Emitter {idx+1} NCC ({final_ncc:.4f}) below threshold 0.8, skipping save')
                     continue
                 
                 # 跳过OTF高斯低通滤波处理

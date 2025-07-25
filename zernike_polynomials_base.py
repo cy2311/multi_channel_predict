@@ -8,7 +8,7 @@ from typing import Tuple
 # -----------------------------------------------------------------------------
 # Load pixel size (anisotropic) from configuration
 # -----------------------------------------------------------------------------
-CFG_PATH = os.path.join('configs', 'default_config copy.json')
+CFG_PATH = os.path.join('configs', 'default_config.json')
 
 with open(CFG_PATH, 'r') as _f:
     _cfg = json.load(_f)

@@ -1,0 +1,19 @@
+{
+  "emitters": {
+    "num_emitters": 2000,
+    "frames": 20,
+    "area_px": 1500.0,
+    "intensity_mu": 3000.0,
+    "lifetime_avg": 3.0
+  },
+  "tiff": {
+    "filename": "custom_simulation.ome.tiff",
+    "roi_size": 1500,
+    "add_noise": true,
+    "noise_params": {
+      "background_level": 150,
+      "readout_noise": 15,
+      "shot_noise": true
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "description": "从Zmap到TIFF的完整处理流程配置",
+  "version": "1.0",
+  
+  "emitters": {
+    "description": "发射器生成参数",
+    "num_emitters": 1000,
+    "frames": 100,
+    "area_px": 1200.0,
+    "intensity_mu": 5000.0,
+    "intensity_sigma": 1000.0,
+    "lifetime_avg": 2.5,
+    "z_range_um": 1.0,
+    "seed": 42,
+    "no_plot": false
+  },
+  
+  "zernike": {
+    "description": "Zernike系数计算参数",
+    "num_plot": 20,
+    "no_plot": false,
+    "interpolation_method": "cubic"
+  },
+  
+  "tiff": {
+    "description": "TIFF输出设置",
+    "filename": "simulation.ome.tiff",
+    "roi_size": 1200,
+    "use_direct_rendering": true,
+    "direct_rendering_note": "推荐使用直接渲染，避免高分辨率渲染和降采样，提高效率并保持亚像素精度",
+    "add_noise": true,
+    "noise_params": {
+      "background": 100,
+      "readout_noise": 10,
+      "shot_noise": true
+    }
+  },
+  
+  "optical": {
+    "description": "光学参数（从default_config.json继承，但不使用固定的PSF Zernike系数）",
+    "use_default_config": true,
+    "ignore_fixed_psf_coeffs": true,
+    "note": "每个发射器的Zernike系数将从Zmap中插值获取，而不是使用固定值"
+  },
+  
+  "output": {
+    "description": "输出设置",
+    "save_intermediate": true,
+    "generate_plots": true,
+    "verbose": true
+  }
+}

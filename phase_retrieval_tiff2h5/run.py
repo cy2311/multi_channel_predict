@@ -44,11 +44,11 @@ def parse_args():
                         help='输出目录')
     
     parser.add_argument('--ncc_threshold', type=float,
-                        default=0.7,
+                        default=0.95,
                         help='相位恢复早停的NCC阈值')
     
     parser.add_argument('--max_iterations', type=int,
-                        default=100,
+                        default=50,
                         help='相位恢复的最大迭代次数')
     
     parser.add_argument('--min_distance', type=int,
@@ -56,7 +56,7 @@ def parse_args():
                         help='发射体之间的最小距离（像素）')
     
     parser.add_argument('--n_emitters', type=int,
-                        default=100,
+                        default=200,
                         help='要检测的最大发射体数量')
     
     return parser.parse_args()
