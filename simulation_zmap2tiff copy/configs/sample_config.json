@@ -1,0 +1,62 @@
+{
+  "description": "样本生成配置 - 生成多个相同参数但不同发射器分布的样本",
+  "base_output_dir": "./outputs",
+  "max_workers": 4,
+  
+  "base_config": {
+    "zmap_path": "/home/guest/Others/DECODE_rewrite/phase_retrieval_tiff2h5/result/result.h5",
+    
+    "emitters": {
+      "description": "发射器生成参数",
+      "num_emitters": 5000,
+      "density_mu_sig": [1.5, 0.3],
+      "intensity_mu_sig": [8000, 1000],
+      "xy_unit": "px",
+      "z_range": [-750, 750],
+      "lifetime": 200,
+      "no_plot": false
+    },
+    
+    "zernike": {
+      "description": "Zernike系数计算参数",
+      "num_plot": 10,
+      "no_plot": false
+    },
+    
+    "tiff": {
+      "description": "TIFF输出设置",
+      "filename": "simulation.tiff",
+      "roi_size": 1200,
+      "use_direct_rendering": true,
+      "add_noise": true,
+      "noise_params": {
+        "background": 100,
+        "readout_noise": 10,
+        "shot_noise": true
+      }
+    },
+    
+    "optical": {
+      "description": "从Zmap插值获取Zernike系数"
+    },
+    
+    "output": {
+      "save_intermediate": true,
+      "generate_plots": true,
+      "verbose": true
+    },
+    
+    "memory_optimization": {
+      "chunk_size": 10,
+      "enable_gc": true,
+      "gc_frequency": 5
+    }
+  },
+  
+  "sample_configs": {
+    "num_samples": 5,
+    "frames_per_sample": 200,
+    "sample_naming": "sample_{sample_id:03d}",
+    "description": "生成5个样本，每个样本200帧，使用相同参数但不同的发射器分布"
+  }
+}

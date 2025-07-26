@@ -1,0 +1,58 @@
+{
+  "description": "简单批量TIFF生成配置",
+  "version": "1.0",
+  
+  "base_output_dir": "batch_output_simple",
+  "max_workers": 2,
+  
+  "base_config": {
+    "zmap_path": "phase_retrieval_tiff2h5/result/result.h5",
+    
+    "emitters": {
+      "num_emitters": 500,
+      "frames": 20,
+      "area_px": 1200.0,
+      "intensity_mu": 10000.0,
+      "intensity_sigma": 2000.0,
+      "lifetime_avg": 2.5,
+      "z_range_um": 1.0,
+      "seed": 42,
+      "no_plot": true
+    },
+    
+    "zernike": {
+      "num_plot": 5,
+      "no_plot": true,
+      "interpolation_method": "cubic"
+    },
+    
+    "tiff": {
+      "filename": "simulation.ome.tiff",
+      "roi_size": 1200,
+      "use_direct_rendering": true,
+      "add_noise": true,
+      "noise_params": {
+        "background": 100,
+        "readout_noise": 10,
+        "shot_noise": true
+      }
+    },
+    
+    "optical": {
+      "use_default_config": true,
+      "ignore_fixed_psf_coeffs": true
+    },
+    
+    "output": {
+      "save_intermediate": true,
+      "generate_plots": false,
+      "verbose": false
+    }
+  },
+  
+  "sample_configs": {
+    "num_samples": 5,
+    "frames_per_sample": 200,
+    "sample_naming": "sample_{sample_id:03d}"
+  }
+}
