@@ -1,19 +1,19 @@
 {
-  "description": "简单批量TIFF生成配置",
-  "version": "1.0",
+  "description": "100个样本批量TIFF生成配置 - 256x256尺寸",
+  "version": "2.0",
   
-  "base_output_dir": "batch_output_simple",
-  "max_workers": 2,
+  "base_output_dir": "outputs_100samples_256",
+  "max_workers": 4,
   
   "base_config": {
-    "zmap_path": "phase_retrieval_tiff2h5/result/result.h5",
+    "zmap_path": "/home/guest/Others/DECODE_rewrite/phase_retrieval_tiff2h5/result/result.h5",
     
     "emitters": {
-      "num_emitters": 500,
-      "frames": 20,
-      "area_px": 1200.0,
-      "intensity_mu": 10000.0,
-      "intensity_sigma": 2000.0,
+      "num_emitters": 800,
+      "frames": 200,
+      "area_px": 256.0,
+      "intensity_mu": 8000.0,
+      "intensity_sigma": 1500.0,
       "lifetime_avg": 2.5,
       "z_range_um": 1.0,
       "seed": 42,
@@ -23,12 +23,15 @@
     "zernike": {
       "num_plot": 5,
       "no_plot": true,
-      "interpolation_method": "cubic"
+      "interpolation_method": "cubic",
+      "crop_size": 256,
+      "crop_offset": [0, 0]
     },
     
     "tiff": {
-      "filename": "simulation.ome.tiff",
-      "roi_size": 1200,
+      "filename": "simulation_256.ome.tiff",
+      "roi_size": 256,
+      "crop_offset": [0, 0],
       "use_direct_rendering": true,
       "add_noise": true,
       "noise_params": {
@@ -51,7 +54,7 @@
   },
   
   "sample_configs": {
-    "num_samples": 5,
+    "num_samples": 100,
     "frames_per_sample": 200,
     "sample_naming": "sample_{sample_id:03d}"
   }

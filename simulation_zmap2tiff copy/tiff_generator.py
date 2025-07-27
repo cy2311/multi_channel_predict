@@ -275,7 +275,8 @@ def simulate_frame_direct(frame_idx: int, emitters_data: Dict[str, np.ndarray],
                           basis: np.ndarray, pupil_mask: np.ndarray, 
                           wavelength_m: float, pixel_size_x: float, pixel_size_y: float,
                           roi_size: int = 1200, add_noise: bool = True, 
-                          noise_params: Optional[Dict] = None) -> np.ndarray:
+                          noise_params: Optional[Dict] = None, 
+                          crop_offset: Tuple[int, int] = (0, 0)) -> np.ndarray:
     """直接生成目标分辨率的单帧图像（避免高分辨率渲染和降采样）
     
     Parameters
@@ -300,6 +301,8 @@ def simulate_frame_direct(frame_idx: int, emitters_data: Dict[str, np.ndarray],
         是否添加噪声
     noise_params : dict, optional
         噪声参数
+    crop_offset : tuple, optional
+        裁剪偏移量 (x_offset, y_offset)，用于从指定角落开始裁剪
         
     Returns
     -------
@@ -346,9 +349,9 @@ def simulate_frame_direct(frame_idx: int, emitters_data: Dict[str, np.ndarray],
         # 缩放PSF强度
         psf_scaled = psf * active_phot[i]
         
-        # 计算在目标画布上的亚像素位置
-        cx_float = active_xyz[i, 0]  # 保持浮点精度
-        cy_float = active_xyz[i, 1]
+        # 计算在目标画布上的亚像素位置（应用裁剪偏移）
+        cx_float = active_xyz[i, 0] - crop_offset[0]  # 保持浮点精度
+        cy_float = active_xyz[i, 1] - crop_offset[1]
         
         # 计算整数像素位置和亚像素偏移
         cx_int = int(np.floor(cx_float))
@@ -415,7 +418,7 @@ def simulate_frame(frame_idx: int, emitters_data: Dict[str, np.ndarray],
                   wavelength_m: float, pixel_size_x: float, pixel_size_y: float,
                   roi_size: int = 1200, hr_size: int = 6144,
                   add_noise: bool = True, noise_params: Optional[Dict] = None,
-                  use_direct_rendering: bool = True) -> np.ndarray:
+                  use_direct_rendering: bool = True, crop_offset: Tuple[int, int] = (0, 0)) -> np.ndarray:
     """模拟单帧图像
     
     Parameters
@@ -444,6 +447,8 @@ def simulate_frame(frame_idx: int, emitters_data: Dict[str, np.ndarray],
         噪声参数
     use_direct_rendering : bool
         是否使用直接渲染（推荐，避免高分辨率渲染和降采样）
+    crop_offset : tuple, optional
+        裁剪偏移量 (x_offset, y_offset)，用于从指定角落开始裁剪
         
     Returns
     -------
@@ -455,7 +460,7 @@ def simulate_frame(frame_idx: int, emitters_data: Dict[str, np.ndarray],
         return simulate_frame_direct(
             frame_idx, emitters_data, basis, pupil_mask,
             wavelength_m, pixel_size_x, pixel_size_y,
-            roi_size, add_noise, noise_params
+            roi_size, add_noise, noise_params, crop_offset
         )
     
     # 原始的高分辨率渲染方法（保留用于兼容性）
@@ -611,6 +616,7 @@ def generate_tiff_stack(h5_path: str, output_path: str,
         'readout_noise': 10,
         'shot_noise': True
     })
+    crop_offset = tiff_config.get('crop_offset', (0, 0))
     
     # 获取所有帧
     unique_frames = np.unique(frame_ix)
@@ -629,7 +635,7 @@ def generate_tiff_stack(h5_path: str, output_path: str,
             frame_idx, emitters_data, basis, pupil_mask,
             wavelength_m, pix_x_m, pix_y_m,
             roi_size, hr_size, add_noise, noise_params,
-            use_direct_rendering
+            use_direct_rendering, crop_offset
         )
         frames.append(frame)
     

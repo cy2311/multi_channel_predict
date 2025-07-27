@@ -12,17 +12,59 @@ import scipy.ndimage as ndi
 from tqdm import tqdm
 
 
-def load_data(patches_path: Path, emitters_path: Path):
-    """Load necessary datasets from the two HDF5 files."""
+def load_data(patches_path: Path, emitters_path: Path, crop_size: int = None, crop_offset: tuple = (0, 0)):
+    """Load necessary datasets from the two HDF5 files.
+    
+    Parameters
+    ----------
+    patches_path : Path
+        Path to patches HDF5 file
+    emitters_path : Path
+        Path to emitters HDF5 file
+    crop_size : int, optional
+        Size for cropping the phase maps (e.g., 256 for 256x256)
+    crop_offset : tuple, optional
+        Offset for cropping (x_offset, y_offset)
+    """
     with h5py.File(patches_path, 'r') as f_patch:
-        phase_maps = np.array(f_patch['z_maps/phase'])          # type: ignore[arg-type]
+        phase_maps_full = np.array(f_patch['z_maps/phase'])          # type: ignore[arg-type]
         coords = np.array(f_patch['coords'], dtype=float)       # type: ignore[arg-type]
         coeff_mag_patch = np.array(f_patch['zernike/coeff_mag']) # type: ignore[arg-type]
+
+    # 如果指定了裁剪参数，则裁剪phase_maps
+    if crop_size is not None:
+        x_offset, y_offset = crop_offset
+        x_end = x_offset + crop_size
+        y_end = y_offset + crop_size
+        
+        # 确保裁剪范围在有效范围内
+        if x_end > phase_maps_full.shape[2] or y_end > phase_maps_full.shape[1]:
+            raise ValueError(f"裁剪范围超出phase_maps边界。phase_maps形状: {phase_maps_full.shape}, "
+                           f"裁剪范围: [{x_offset}:{x_end}, {y_offset}:{y_end}]")
+        
+        phase_maps = phase_maps_full[:, y_offset:y_end, x_offset:x_end]
+        print(f"Phase maps已从 {phase_maps_full.shape} 裁剪到 {phase_maps.shape}")
+    else:
+        phase_maps = phase_maps_full
 
     with h5py.File(emitters_path, 'r') as f_emit:
         em_xyz = np.array(f_emit['emitters/xyz'])                # type: ignore[arg-type]
 
     em_xy = em_xyz[:, :2].astype(float)
+    
+    # 如果进行了裁剪，需要调整发射器坐标
+    if crop_size is not None:
+        em_xy[:, 0] -= crop_offset[0]  # 调整x坐标
+        em_xy[:, 1] -= crop_offset[1]  # 调整y坐标
+        
+        # 过滤掉超出裁剪区域的发射器
+        valid_mask = ((em_xy[:, 0] >= 0) & (em_xy[:, 0] < crop_size) & 
+                     (em_xy[:, 1] >= 0) & (em_xy[:, 1] < crop_size))
+        em_xy = em_xy[valid_mask]
+        em_xyz = em_xyz[valid_mask]
+        
+        print(f"裁剪后保留 {len(em_xy)} 个发射器（原始: {len(valid_mask)}）")
+    
     return phase_maps, coords, coeff_mag_patch, em_xy
 
 
@@ -104,12 +146,31 @@ def save_coeffs(emitters_path: Path, phase_coeffs: np.ndarray, mag_coeffs: np.nd
         grp.create_dataset('mag', data=mag_coeffs)
 
 
-def process_single_file(patches_path: Path, emitters_path: Path, num_plot: int):
-    """处理单个h5文件"""
+def process_single_file(patches_path: Path, emitters_path: Path, num_plot: int, 
+                       crop_size: int = None, crop_offset: tuple = (0, 0)):
+    """处理单个h5文件
+    
+    Parameters
+    ----------
+    patches_path : Path
+        Path to patches HDF5 file
+    emitters_path : Path
+        Path to emitters HDF5 file
+    num_plot : int
+        Number of emitters to plot
+    crop_size : int, optional
+        Size for cropping the phase maps
+    crop_offset : tuple, optional
+        Offset for cropping (x_offset, y_offset)
+    """
     print(f"处理文件: {emitters_path}")
+    if crop_size is not None:
+        print(f"使用裁剪参数: 尺寸={crop_size}x{crop_size}, 偏移={crop_offset}")
     
     # 加载数据
-    phase_maps, coords, coeff_mag_patch, em_xy = load_data(patches_path, emitters_path)
+    phase_maps, coords, coeff_mag_patch, em_xy = load_data(
+        patches_path, emitters_path, crop_size, crop_offset
+    )
 
     # 计算系数
     phase_coeffs = compute_phase_coeffs(phase_maps, em_xy)  # type: ignore[arg-type]
@@ -129,9 +190,13 @@ def main():
     parser.add_argument('--emitters', type=str, default='simulated_data/emitters_sets_raw.h5', help='单个发射器HDF5路径更新')
     parser.add_argument('--emitters_dir', type=str, help='包含多个发射器HDF5文件的目录路径')
     parser.add_argument('--num_plot', type=int, default=10, help='要绘制的随机发射器数量')
+    parser.add_argument('--crop_size', type=int, help='裁剪尺寸（例如256表示256x256）')
+    parser.add_argument('--crop_offset_x', type=int, default=0, help='X方向裁剪偏移')
+    parser.add_argument('--crop_offset_y', type=int, default=0, help='Y方向裁剪偏移')
     args = parser.parse_args()
 
     patches_path = Path(args.patches)
+    crop_offset = (args.crop_offset_x, args.crop_offset_y)
     
     # 检查patches文件是否存在
     if not patches_path.exists():
@@ -151,7 +216,7 @@ def main():
         
         print(f"在目录 {emitters_dir} 中找到 {len(h5_files)} 个h5文件")
         for h5_file in tqdm(h5_files, desc="处理h5文件"):
-            process_single_file(patches_path, h5_file, args.num_plot)
+            process_single_file(patches_path, h5_file, args.num_plot, args.crop_size, crop_offset)
     
     # 否则处理单个文件
     else:
@@ -159,7 +224,7 @@ def main():
         if not emitters_path.exists():
             raise FileNotFoundError(f"找不到发射器文件: {emitters_path}")
         
-        process_single_file(patches_path, emitters_path, args.num_plot)
+        process_single_file(patches_path, emitters_path, args.num_plot, args.crop_size, crop_offset)
 
 
 if __name__ == '__main__':

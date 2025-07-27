@@ -307,9 +307,16 @@ class BatchTiffGenerator:
         print(f"从 {zmap_path} 加载相位图数据")
         print(f"处理发射器文件: {emitters_path}")
         
+        # 获取裁剪参数
+        crop_size = zernike_config.get('crop_size')
+        crop_offset = zernike_config.get('crop_offset', (0, 0))
+        
+        if crop_size is not None:
+            print(f"使用裁剪参数: 尺寸={crop_size}x{crop_size}, 偏移={crop_offset}")
+        
         # 加载数据
         phase_maps, coords, coeff_mag_patch, em_xy = load_data(
-            Path(zmap_path), emitters_path
+            Path(zmap_path), emitters_path, crop_size, crop_offset
         )
         
         print(f"相位图形状: {phase_maps.shape}")
@@ -589,9 +596,16 @@ def _step2_compute_zernike_coeffs_standalone(zmap_path: str, emitters_path: Path
     print(f"从 {zmap_path} 加载相位图数据")
     print(f"处理发射器文件: {emitters_path}")
     
+    # 获取裁剪参数
+    crop_size = zernike_config.get('crop_size')
+    crop_offset = zernike_config.get('crop_offset', (0, 0))
+    
+    if crop_size is not None:
+        print(f"使用裁剪参数: 尺寸={crop_size}x{crop_size}, 偏移={crop_offset}")
+    
     # 加载数据
     phase_maps, coords, coeff_mag_patch, em_xy = load_data(
-        Path(zmap_path), emitters_path
+        Path(zmap_path), emitters_path, crop_size, crop_offset
     )
     
     print(f"相位图形状: {phase_maps.shape}")
