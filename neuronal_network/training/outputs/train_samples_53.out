@@ -1,0 +1,28 @@
+==========================================
+DECODE网络训练 - 20 样本
+开始时间: 2025年 07月 27日 星期日 16:24:01 CST
+样本数: 20
+训练轮数: 10
+批处理大小: 4
+学习率: 1e-4
+GPU设备: 0
+数据目录: /home/guest/Others/DECODE_rewrite/simulation_zmap2tiff/outputs_100samples_256
+输出目录: /home/guest/Others/DECODE_rewrite/neuronal_network/training/outputs/train_20samples_20250727_162401
+SLURM Job ID: 53
+==========================================
+启动TensorBoard在端口: 6026
+TensorBoard PID: 3079446
+开始训练...
+usage: start_training.py [-h] [--samples {10,50,100}] [--epochs EPOCHS]
+                         [--batch_size BATCH_SIZE] [--lr LR]
+                         [--output_suffix OUTPUT_SUFFIX] [--data_dir DATA_DIR]
+start_training.py: error: argument --samples: invalid choice: 20 (choose from 10, 50, 100)
+==========================================
+训练完成时间: 2025年 07月 27日 星期日 16:24:03 CST
+训练退出码: 2
+正在清理TensorBoard进程...
+==========================================
+训练脚本执行完成
+TensorBoard访问地址: http://your_server:6026
+输出目录: /home/guest/Others/DECODE_rewrite/neuronal_network/training/outputs/train_20samples_20250727_162401
+==========================================

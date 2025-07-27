@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from first_level_unets import ConvBlock, DownBlock, UpBlock
+from .first_level_unets import ConvBlock, DownBlock, UpBlock
 
 __all__ = [
     "SecondLevelNet",

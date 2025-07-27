@@ -1,0 +1,7 @@
+2025-07-27 16:27:35.323216: I tensorflow/core/util/port.cc:110] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-07-27 16:27:35.376765: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+TensorFlow installation not found - running with reduced feature set.
+I0727 16:27:36.125097 140653672294144 plugin.py:429] Monitor runs begin
+TensorBoard 2.14.0 at http://0.0.0.0:6086/ (Press CTRL+C to quit)
+slurmstepd: error: *** JOB 57 ON master CANCELLED AT 2025-07-27T16:35:14 ***

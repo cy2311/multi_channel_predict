@@ -108,6 +108,58 @@ class UNetLevel1(nn.Module):
         return self.final_conv(x)
 
 
+class ThreeIndependentUNets(nn.Module):
+    """三个独立的UNet，不共享参数，用于处理连续的三帧图像"""
+    
+    def __init__(self, in_channels: int = 1, base_filters: int = 48, num_classes: int = 48):
+        super().__init__()
+        # 创建三个独立的UNet实例
+        self.unet1 = UNetLevel1(in_channels, base_filters, num_classes)
+        self.unet2 = UNetLevel1(in_channels, base_filters, num_classes)
+        self.unet3 = UNetLevel1(in_channels, base_filters, num_classes)
+        
+    def forward(self, frames: torch.Tensor) -> torch.Tensor:
+        """处理三个连续帧
+        
+        Args:
+            frames: 形状为 (B, 3, H, W) 的张量，包含三个连续帧
+            
+        Returns:
+            features: 形状为 (B, 3, 48, H, W) 的特征张量
+        """
+        if frames.dim() == 4 and frames.size(1) == 3:
+            # 输入是 (B, 3, H, W)
+            frame1 = frames[:, 0:1, :, :]  # (B, 1, H, W)
+            frame2 = frames[:, 1:2, :, :]  # (B, 1, H, W)
+            frame3 = frames[:, 2:3, :, :]  # (B, 1, H, W)
+        else:
+            raise ValueError(f"Expected input shape (B, 3, H, W), got {frames.shape}")
+            
+        # 使用三个独立的UNet处理每一帧
+        feat1 = self.unet1(frame1)  # (B, 48, H, W)
+        feat2 = self.unet2(frame2)  # (B, 48, H, W)
+        feat3 = self.unet3(frame3)  # (B, 48, H, W)
+        
+        # 堆叠特征 (B, 3, 48, H, W)
+        features = torch.stack([feat1, feat2, feat3], dim=1)
+        
+        return features
+    
+    def get_parameter_count(self):
+        """获取每个UNet的参数数量"""
+        unet1_params = sum(p.numel() for p in self.unet1.parameters())
+        unet2_params = sum(p.numel() for p in self.unet2.parameters())
+        unet3_params = sum(p.numel() for p in self.unet3.parameters())
+        total_params = unet1_params + unet2_params + unet3_params
+        
+        return {
+            'unet1': unet1_params,
+            'unet2': unet2_params, 
+            'unet3': unet3_params,
+            'total': total_params
+        }
+
+
 def load_tiff_stack(path: Path) -> np.ndarray:
     """Load OME-TIFF into a NumPy array of shape (num_frames, H, W) using memory mapping.
     
@@ -131,7 +183,7 @@ def main():
     tiff_path = root / "simulated_data_multi_frames/frames_200f_1200px_camera_photon.ome.tiff"
     output_dir = root / "nn_train"
     output_dir.mkdir(exist_ok=True)
-    output_path = output_dir / "features_level1.npy"
+    output_path = output_dir / "features_level1_independent.npy"
 
     # Load data
     print("Loading TIFF stack…")
@@ -139,29 +191,48 @@ def main():
     num_frames, height, width = frames_np.shape
     print(f"Loaded {num_frames} frames of size {height}×{width}.")
 
-    # Allocate output container
-    features = np.empty((num_frames, 48, height, width), dtype=np.float32)
+    # 确保帧数是3的倍数（用于处理连续三帧）
+    if num_frames % 3 != 0:
+        # 截断到最接近的3的倍数
+        num_frames = (num_frames // 3) * 3
+        frames_np = frames_np[:num_frames]
+        print(f"Truncated to {num_frames} frames for triplet processing.")
+
+    # 重新组织数据为三帧组
+    num_triplets = num_frames // 3
+    triplet_frames = frames_np.reshape(num_triplets, 3, height, width)
+    
+    # Allocate output container for features
+    features = np.empty((num_triplets, 3, 48, height, width), dtype=np.float32)
 
     # Device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    # Instantiate a single shared UNet (parameters will be reused for every frame)
-    net = UNetLevel1().to(device)
-    net.eval()  # inference mode (no training yet)
-    print(f"Shared UNet parameters: {sum(p.numel() for p in net.parameters()):,}")
+    # 实例化三个独立的UNet
+    net = ThreeIndependentUNets().to(device)
+    net.eval()  # inference mode
+    
+    # 打印参数信息
+    param_info = net.get_parameter_count()
+    print(f"UNet1 parameters: {param_info['unet1']:,}")
+    print(f"UNet2 parameters: {param_info['unet2']:,}")
+    print(f"UNet3 parameters: {param_info['unet3']:,}")
+    print(f"Total parameters: {param_info['total']:,}")
 
-    # Process frames round-robin
+    # Process triplet frames
     with torch.no_grad():
-        for i in range(num_frames):
-            frame = torch.from_numpy(frames_np[i]).unsqueeze(0).unsqueeze(0)  # (1,1,H,W)
-            frame = frame.to(device)
+        for i in range(num_triplets):
+            # 获取三帧数据 (3, H, W)
+            triplet = torch.from_numpy(triplet_frames[i]).unsqueeze(0)  # (1, 3, H, W)
+            triplet = triplet.to(device)
 
-            feat = net(frame)  # (1, 48, H, W)
-            features[i] = feat.squeeze(0).cpu().numpy()
+            # 通过三个独立的UNet处理
+            feat = net(triplet)  # (1, 3, 48, H, W)
+            features[i] = feat.squeeze(0).cpu().numpy()  # (3, 48, H, W)
 
-            if (i + 1) % 10 == 0 or i == num_frames - 1:
-                print(f"Processed {i + 1}/{num_frames} frames…")
+            if (i + 1) % 10 == 0 or i == num_triplets - 1:
+                print(f"Processed {i + 1}/{num_triplets} triplets…")
 
     # Save features
     print(f"Saving features to {output_path}…")

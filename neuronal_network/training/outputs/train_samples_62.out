@@ -1,0 +1,42 @@
+检测GPU分配...
+使用环境变量中的GPU: 2 (主GPU: 2)
+==========================================
+DECODE网络训练 - 100 样本
+开始时间: 2025年 07月 27日 星期日 16:36:37 CST
+样本数: 100
+训练轮数: 100
+批处理大小: 4
+学习率: 1e-4
+GPU设备: 2
+数据目录: /home/guest/Others/DECODE_rewrite/simulation_zmap2tiff/outputs_100samples_256
+输出目录: /home/guest/Others/DECODE_rewrite/neuronal_network/training/outputs/train_100samples_20250727_163637
+SLURM Job ID: 62
+==========================================
+分配TensorBoard端口...
+启动TensorBoard在端口: 6088
+TensorBoard PID: 3301263
+开始训练...
+使用GPU: 2 (CUDA_VISIBLE_DEVICES=2)
+当前GPU状态:
+2, NVIDIA GeForce RTX 3090, 14052 MiB, 24576 MiB
+开始训练DECODE网络:
+  数据目录: /home/guest/Others/DECODE_rewrite/simulation_zmap2tiff/outputs_100samples_256
+  样本数量: 100
+  训练轮数: 100
+  批次大小: 4
+  学习率: 0.0001
+  输出目录: /home/guest/Others/DECODE_rewrite/neuronal_network/training/outputs/train_100samples_20250727_163638
+
+创建数据加载器...
+训练样本: 80, 验证样本: 20
+找到 80 个有效样本
+总共 5280 个训练样本
+找到 20 个有效样本
+总共 1320 个训练样本
+训练批次: 1320, 验证批次: 330
+使用设备: cuda
+模型参数数量:
+  第一级网络: 19,612,656
+  第二级网络: 6,660,547
+开始训练，共 100 个epoch
+训练 Epoch 1:   0%|          | 0/1320 [00:00<?, ?it/s]训练 Epoch 1:   0%|          | 0/1320 [00:05<?, ?it/s, loss=2600517.0000, count=0.5914, loc=2.0268]训练 Epoch 1:   0%|          | 1/1320 [00:05<2:06:10,  5.74s/it, loss=2600517.0000, count=0.5914, loc=2.0268]训练 Epoch 1:   0%|          | 1/1320 [00:08<2:06:10,  5.74s/it, loss=1972628.2500, count=0.5928, loc=2.4899]训练 Epoch 1:   0%|          | 2/1320 [00:08<1:27:08,  3.97s/it, loss=1972628.2500, count=0.5928, loc=2.4899]训练 Epoch 1:   0%|          | 2/1320 [00:11<1:27:08,  3.97s/it, loss=2278290.0000, count=0.5888, loc=1.8289]训练 Epoch 1:   0%|          | 3/1320 [00:11<1:16:48,  3.50s/it, loss=2278290.0000, count=0.5888, loc=1.8289]训练 Epoch 1:   0%|          | 3/1320 [00:15<1:16:48,  3.50s/it, loss=2307122.2500, count=0.6005, loc=3.8100]训练 Epoch 1:   0%|          | 4/1320 [00:15<1:21:21,  3.71s/it, loss=2307122.2500, count=0.6005, loc=3.8100]训练 Epoch 1:   0%|          | 4/1320 [00:18<1:21:21,  3.71s/it, loss=1783255.3750, count=0.6013, loc=4.9217]训练 Epoch 1:   0%|          | 5/1320 [00:18<1:12:44,  3.32s/it, loss=1783255.3750, count=0.6013, loc=4.9217]训练 Epoch 1:   0%|          | 5/1320 [00:21<1:12:44,  3.32s/it, loss=2672834.5000, count=0.6021, loc=5.0392]训练 Epoch 1:   0%|          | 6/1320 [00:21<1:10:01,  3.20s/it, loss=2672834.5000, count=0.6021, loc=5.0392]

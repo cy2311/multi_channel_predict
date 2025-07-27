@@ -7,12 +7,26 @@
 ```
 /home/guest/Others/DECODE_rewrite/
 ├── neuronal_network/               # 神经网络相关代码
-│   ├── first_level_unets.py        # 第一层UNet网络定义
-│   ├── second_level_network.py     # 第二层网络定义
+│   ├── models/                     # 网络模型定义
+│   │   ├── first_level_unets.py    # 第一层UNet网络定义
+│   │   └── second_level_network.py # 第二层网络定义
+│   ├── training/                   # 训练脚本
+│   │   ├── train_network.py        # 基础训练脚本
+│   │   ├── train_network_fix.py    # 修复版训练脚本
+│   │   ├── train_network_loc.py    # 带定位的训练脚本
+│   │   └── train_network_loc_back.py # 带定位和背景的训练脚本
+│   ├── inference/                  # 推理脚本
+│   │   ├── inference.py            # 基础推理脚本
+│   │   └── inference_loc.py        # 带定位的推理脚本
 │   ├── loss/                       # 损失函数
 │   │   ├── count_loss.py           # 计数损失函数
-│   ├── train_network.py            # 训练脚本
-│   └── inference.py                # 推理脚本
+│   │   ├── loc_loss.py             # 定位损失函数
+│   │   └── background_loss.py      # 背景损失函数
+│   ├── scripts/                    # Shell脚本
+│   │   ├── train_network.sh        # 训练脚本
+│   │   ├── train_network_loc.sh    # 带定位的训练脚本
+│   │   └── inference_loc.sh        # 推理脚本
+│   └── utils/                      # 工具函数
 ├── simulated_data_multi_frames/    # 模拟数据
 │   ├── emitter_sets/               # 发射体信息
 │   │   ├── emitters_set0.h5        # 发射体位置和属性
@@ -57,7 +71,7 @@
 使用SLURM提交训练任务：
 
 ```bash
-sbatch train_network.sh
+sbatch scripts/train_network.sh
 ```
 
 训练脚本会：
@@ -83,13 +97,13 @@ ssh -L 6006:localhost:6006 your_username@your_server
 使用SLURM提交推理任务：
 
 ```bash
-sbatch inference.sh
+sbatch scripts/inference_loc.sh
 ```
 
 或者直接运行：
 
 ```bash
-python neuronal_network/inference.py \
+python inference/inference.py \
     --tiff_path=/path/to/your/data.ome.tiff \
     --output_dir=/path/to/output \
     --checkpoint=/path/to/model.pth \
@@ -122,8 +136,10 @@ python neuronal_network/inference.py \
 
 如果需要自定义训练过程，可以修改以下文件：
 
-- `train_network.py`：调整训练参数、数据加载和模型架构
-- `train_network.sh`：修改SLURM配置和训练命令行参数
+- `training/train_network.py`：调整训练参数、数据加载和模型架构
+- `scripts/train_network.sh`：修改SLURM配置和训练命令行参数
+- `models/`：修改网络架构
+- `loss/`：自定义损失函数
 
 ## 故障排除
 
