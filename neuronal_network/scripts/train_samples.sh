@@ -6,8 +6,8 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:1
-#SBATCH --mem=16G
-#SBATCH --time=12:00:00
+#SBATCH --mem=24G
+#SBATCH --time=48:00:00
 #SBATCH --partition=cpu1
 #SBATCH --exclusive=user
 
@@ -15,7 +15,7 @@
 # 训练参数配置区域 - 根据需要修改以下参数
 # ============================================
 SAMPLES=100          # 样本数量: 20, 50, 80, 100 等
-EPOCHS=100           # 训练轮数
+EPOCHS=1000           # 训练轮数
 BATCH_SIZE=4        # 批处理大小
 LEARNING_RATE=1e-4  # 学习率
 # GPU_ID 将通过自动检测获得，不再硬编码
@@ -51,7 +51,7 @@ fi
 # 基础路径配置
 BASE_DIR="/home/guest/Others/DECODE_rewrite"
 TRAINING_DIR="$BASE_DIR/neuronal_network/training"
-DATA_DIR="$BASE_DIR/simulation_zmap2tiff/outputs_100samples_256"  # 使用100样本数据集
+DATA_DIR="$BASE_DIR/simulation_zmap2tiff/outputs_100samples_40"  # 使用100样本40x40数据集
 
 # 创建输出目录
 OUTPUT_DIR="$TRAINING_DIR/outputs/train_${SAMPLES}samples_$(date +%Y%m%d_%H%M%S)"
