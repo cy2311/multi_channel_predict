@@ -14,11 +14,19 @@ def overlap(t0: float, te: float, k: int) -> float:
 
 
 def sample_emitters(num_emitters: int, frame_range: tuple, area_px: float, intensity_mu: float,
-                    intensity_sigma: float, lifetime_avg: float, z_range_um: float = 1.0, seed: int = 42):
+                    intensity_sigma: float, lifetime_avg: float, z_range_um: float = 1.0, seed: int = 42,
+                    enable_dual_channel: bool = False, channel_1_wavelength: float = 561.0, 
+                    channel_2_wavelength: float = 680.0):
     """Sample basic emitter attributes.
+
+    Parameters:
+        enable_dual_channel: bool, whether to generate dual-channel data
+        channel_1_wavelength: float, wavelength for channel 1 in nm (default 561nm)
+        channel_2_wavelength: float, wavelength for channel 2 in nm (default 680nm)
 
     Returns:
         dict with keys xyz, intensity, t0, on_time, id (all torch tensors)
+        If dual_channel enabled, also includes channel_ratio, channel_1_wavelength, channel_2_wavelength
     """
     rng = np.random.default_rng(seed)
 
@@ -40,7 +48,17 @@ def sample_emitters(num_emitters: int, frame_range: tuple, area_px: float, inten
 
     ids = torch.arange(num_emitters, dtype=torch.long)
 
-    return dict(xyz=xyz, intensity=intensity, t0=t0, on_time=on_time, id=ids)
+    result = dict(xyz=xyz, intensity=intensity, t0=t0, on_time=on_time, id=ids)
+    
+    # 添加双通道支持
+    if enable_dual_channel:
+        # 为每个发射器生成通道比例（0-1之间的均匀分布）
+        channel_ratio = torch.tensor(rng.uniform(0, 1, size=num_emitters), dtype=torch.float32)
+        result['channel_ratio'] = channel_ratio
+        result['channel_1_wavelength'] = torch.full((num_emitters,), channel_1_wavelength, dtype=torch.float32)
+        result['channel_2_wavelength'] = torch.full((num_emitters,), channel_2_wavelength, dtype=torch.float32)
+    
+    return result
 
 
 def bin_emitters_to_frames(em_attrs: dict, frame_range: tuple):
@@ -52,6 +70,7 @@ def bin_emitters_to_frames(em_attrs: dict, frame_range: tuple):
 
     Returns:
         records dict with xyz, phot, frame_ix, id tensors
+        If dual_channel enabled, also includes channel_ratio
     """
     k_start, k_end = frame_range
 
@@ -59,12 +78,18 @@ def bin_emitters_to_frames(em_attrs: dict, frame_range: tuple):
     phot_all = []
     frame_all = []
     id_all = []
+    channel_ratio_all = []
 
     xyz = em_attrs['xyz']
     intensity = em_attrs['intensity']
     t0 = em_attrs['t0']
     on_time = em_attrs['on_time']
     ids = em_attrs['id']
+    
+    # 检查是否有双通道数据
+    has_dual_channel = 'channel_ratio' in em_attrs
+    if has_dual_channel:
+        channel_ratio = em_attrs['channel_ratio']
 
     for i in range(len(ids)):
         te = float(t0[i] + on_time[i])
@@ -75,6 +100,8 @@ def bin_emitters_to_frames(em_attrs: dict, frame_range: tuple):
                 phot_all.append(intensity[i] * dt)
                 frame_all.append(k)
                 id_all.append(ids[i])
+                if has_dual_channel:
+                    channel_ratio_all.append(channel_ratio[i])
 
     records = dict(
         xyz=torch.stack(xyz_all) if xyz_all else torch.zeros((0, 3), dtype=torch.float32),
@@ -82,6 +109,11 @@ def bin_emitters_to_frames(em_attrs: dict, frame_range: tuple):
         frame_ix=torch.tensor(frame_all, dtype=torch.long),
         id=torch.tensor(id_all, dtype=torch.long)
     )
+    
+    # 添加双通道数据
+    if has_dual_channel:
+        records['channel_ratio'] = torch.tensor(channel_ratio_all, dtype=torch.float32)
+    
     return records
 
 
@@ -89,12 +121,23 @@ def save_to_h5(out_path: Path, em_attrs: dict, records: dict):
     """Save emitter attributes and per-frame records into an HDF5 file."""
     with h5py.File(out_path, 'w') as f:
         grp_em = f.create_group('emitters')
+        # 保存基本属性
         for key in ('xyz', 'intensity', 't0', 'on_time', 'id'):
             grp_em.create_dataset(key, data=em_attrs[key].cpu().numpy())
+        
+        # 保存双通道相关属性（如果存在）
+        dual_channel_keys = ('channel_ratio', 'channel_1_wavelength', 'channel_2_wavelength')
+        for key in dual_channel_keys:
+            if key in em_attrs:
+                grp_em.create_dataset(key, data=em_attrs[key].cpu().numpy())
 
         grp_rec = f.create_group('records')
         for key in ('xyz', 'phot', 'frame_ix', 'id'):
             grp_rec.create_dataset(key, data=records[key].cpu().numpy())
+        
+        # 保存双通道records数据（如果存在）
+        if 'channel_ratio' in records:
+            grp_rec.create_dataset('channel_ratio', data=records['channel_ratio'].cpu().numpy())
 
 
  
@@ -181,6 +224,11 @@ def main():
     parser.add_argument('--frames_range', type=str, default='5,20', 
                         help='Range of frame counts (min,max) when vary_frames is enabled')
     
+    # 双通道相关参数
+    parser.add_argument('--enable_dual_channel', action='store_true', help='Enable dual-channel data generation')
+    parser.add_argument('--channel_1_wavelength', type=float, default=561.0, help='Wavelength for channel 1 in nm')
+    parser.add_argument('--channel_2_wavelength', type=float, default=680.0, help='Wavelength for channel 2 in nm')
+    
     args = parser.parse_args()
 
     # 处理帧数变化范围
@@ -262,7 +310,10 @@ def main():
         # 1) sample emitters
         em_attrs = sample_emitters(current_emitter_count, frame_range, args.area_px,
                                  current_intensity, args.intensity_sigma,
-                                 current_lifetime, z_range_um=current_z_range, seed=current_seed)
+                                 current_lifetime, z_range_um=current_z_range, seed=current_seed,
+                                 enable_dual_channel=args.enable_dual_channel,
+                                 channel_1_wavelength=args.channel_1_wavelength,
+                                 channel_2_wavelength=args.channel_2_wavelength)
 
         # 2) bin to frames
         records = bin_emitters_to_frames(em_attrs, frame_range)

@@ -28,6 +28,7 @@ from models.second_level_network import SecondLevelNet
 from loss.count_loss import CountLoss
 from loss.loc_loss import LocLoss
 from loss.background_loss import BackgroundLoss
+from loss.improved_count_loss import ImprovedCountLoss, MultiLevelLoss
 from utils.dataset import create_dataloaders
 
 
@@ -60,6 +61,20 @@ class DECODETrainer:
         self.count_loss = CountLoss()
         self.loc_loss = LocLoss()
         self.background_loss = BackgroundLoss()
+        
+        # 创建改进的损失函数
+        self.improved_count_loss = ImprovedCountLoss(
+            pos_weight=2.0,  # 前景权重，处理类别不平衡
+            pixel_weight_strategy='adaptive',  # 自适应像素权重
+            channel_weights=None  # 可根据需要设置通道权重
+        )
+        
+        # 创建多层次损失函数
+        self.multi_level_loss = MultiLevelLoss(
+            count_pos_weight=2.0,
+            pixel_weight_strategy='adaptive',
+            loss_weights=config['training']['loss_weights']
+        )
         
         # 损失权重
         self.loss_weights = config['training']['loss_weights']
@@ -163,10 +178,13 @@ class DECODETrainer:
         """计算损失"""
         losses = {}
         
-        # 计数损失 - 使用prob输出
-        count_pred = torch.sigmoid(outputs['prob'])  # [B, 1, H, W] -> sigmoid
+        # 计数损失 - 使用改进的BCEWithLogitsLoss
+        count_logits = outputs['prob']  # [B, 1, H, W] - 直接使用logits，不经过sigmoid
         count_target = targets['count_maps'][:, 0:1, :, :]  # 取第一帧 [B, 1, H, W]
-        losses['count'] = nn.BCELoss()(count_pred, count_target)
+        losses['count'] = self.improved_count_loss(count_logits, count_target)
+        
+        # 为后续损失计算生成概率图
+        count_pred = torch.sigmoid(count_logits)  # [B, 1, H, W]
         
         # 定位损失 - 使用offset输出
         loc_pred = outputs['offset']            # [B, 3, H, W] (dx, dy, dz)

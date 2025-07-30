@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-运行100样本256x256尺寸TIFF生成
+运行100样本40x40尺寸TIFF生成
 
 这个脚本用于生成完整的100个样本数据集，每个样本包含200帧。
 总共生成20,000帧数据用于神经网络训练。
@@ -15,12 +15,12 @@ from batch_tiff_generator import BatchTiffGenerator
 def main():
     """运行100样本生成"""
     # 解析命令行参数
-    parser = argparse.ArgumentParser(description='生成100样本256x256尺寸TIFF数据集')
+    parser = argparse.ArgumentParser(description='生成100样本40x40尺寸TIFF数据集')
     parser.add_argument('--auto-confirm', action='store_true', 
                        help='自动确认开始生成，跳过交互式提示（用于SLURM等自动化环境）')
     args = parser.parse_args()
     
-    print("=== 开始生成100样本256x256尺寸TIFF数据集 ===")
+    print("=== 开始生成100样本40x40尺寸TIFF数据集 ===")
     print("这将生成100个样本，每个样本200帧，总共20,000帧数据")
     print("预计处理时间: 2-4小时（取决于硬件性能）")
     print("")
