@@ -1,0 +1,5 @@
+/var/spool/slurmd/job00069/slurm_script: line 14: cd: /home/guest/Others/DECODE_rewrite/simulation_zmap2tiff copy: No such file or directory
+Traceback (most recent call last):
+  File "/home/guest/Others/DECODE_rewrite/simulation_zmap2tiff/slurm/../scripts/run_100_40_samples.py", line 13, in <module>
+    from batch_tiff_generator import BatchTiffGenerator
+ModuleNotFoundError: No module named 'batch_tiff_generator'

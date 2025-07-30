@@ -6,6 +6,7 @@ nn_train_loc/
 nn_train_loc_back/
 beads/
 uiPSF/
+VAR/
 
 # 屏蔽特定文件
 emitters.h5

@@ -1,0 +1,2 @@
+usage: train_true_var.py [-h] [--config CONFIG]
+train_true_var.py: error: unrecognized arguments: --verbose

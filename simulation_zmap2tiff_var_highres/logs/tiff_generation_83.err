@@ -1,0 +1,3 @@
+usage: batch_tiff_generator.py [-h] --batch_config BATCH_CONFIG
+                               [--max_workers MAX_WORKERS] [--no_resume]
+batch_tiff_generator.py: error: the following arguments are required: --batch_config

@@ -1,0 +1,70 @@
+{
+  "model": {
+    "type": "TrueVAREmitterPredictor",
+    "patch_nums": [10, 20, 40, 80],
+    "embed_dim": 128,
+    "num_heads": 4,
+    "num_layers": 4,
+    "vocab_size": 2048,
+    "mlp_ratio": 2.0,
+    "dropout": 0.1,
+    "input_channels": 1
+  },
+  "training": {
+    "input_resolution": [160, 160],
+    "target_resolutions": {
+      "target_10": [10, 10],
+      "target_20": [20, 20], 
+      "target_40": [40, 40],
+      "target_80": [80, 80]
+    },
+    "batch_size": 1,
+    "learning_rate": 1e-4,
+    "weight_decay": 0.05,
+    "warmup_steps": 1000,
+    "max_steps": 100000,
+    "gradient_clip": 1.0,
+    "accumulation_steps": 4
+  },
+  "loss": {
+    "prob_weight": 1.0,
+    "loc_weight": 1.0,
+    "vq_weight": 0.1,
+    "count_weight": 1.0,
+    "scale_weights": [0.5, 0.7, 0.9, 1.0]
+  },
+  "inference": {
+    "input_resolution": [160, 160],
+    "target_resolution": 80,
+    "super_resolution_mode": true
+  },
+  "data": {
+    "train_path": "/home/guest/Others/DECODE_rewrite/simulation_zmap2tiff_var_highres/outputs_100samples_160",
+    "val_path": "/home/guest/Others/DECODE_rewrite/simulation_zmap2tiff_var_highres/outputs_100samples_160",
+    "num_workers": 4,
+    "pin_memory": true
+  },
+  "optimizer": {
+    "type": "AdamW",
+    "betas": [0.9, 0.95],
+    "eps": 1e-8
+  },
+  "scheduler": {
+    "type": "cosine",
+    "min_lr": 1e-6,
+    "warmup_type": "linear"
+  },
+  "checkpointing": {
+    "save_every": 5000,
+    "keep_last": 5,
+    "save_best": true
+  },
+  "logging": {
+    "log_every": 100,
+    "eval_every": 1000,
+    "use_wandb": false,
+    "wandb_project": "var_emitter_prediction",
+    "wandb_entity": null,
+    "wandb_offline": true
+  }
+}

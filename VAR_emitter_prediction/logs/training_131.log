@@ -1,0 +1,57 @@
+INFO:__main__:Wandb logging disabled
+INFO:__main__:Total parameters: 14,875,916
+INFO:__main__:Trainable parameters: 14,875,916
+INFO:__main__:Training samples: 1000
+INFO:__main__:Validation samples: 1000
+INFO:__main__:Starting VAR training...
+Using device: cuda (NVIDIA GeForce RTX 3090)
+GPU memory: 23.6 GB
+Current batch size: 2
+If you encounter CUDA out of memory errors, reduce batch_size in config file
+No sample directories found at data/train, using 1000 synthetic samples
+No sample directories found at data/val, using 1000 synthetic samples
+Epoch 0:   0%|          | 0/500 [00:00<?, ?it/s]ERROR:__main__:CUDA out of memory error: CUDA out of memory. Tried to allocate 2.44 GiB. GPU 0 has a total capacity of 23.60 GiB of which 2.02 GiB is free. Including non-PyTorch memory, this process has 21.55 GiB memory in use. Of the allocated memory 21.01 GiB is allocated by PyTorch, and 250.25 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+ERROR:__main__:Try reducing batch_size in config file
+Epoch 0:   0%|          | 0/500 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 623, in <module>
+    trainer.train()
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 531, in train
+    losses = self.train_step(batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 467, in train_step
+    raise e
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 452, in train_step
+    predictions = self.model(images)
+                  ^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/var_emitter_model_true.py", line 350, in forward
+    tokens = block(tokens, scale_cond)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/var_emitter_model_true.py", line 165, in forward
+    attn_out, _ = self.attn(x_norm, x_norm, x_norm)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/activation.py", line 1373, in forward
+    attn_output, attn_output_weights = F.multi_head_attention_forward(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/functional.py", line 6373, in multi_head_attention_forward
+    attn_output_weights = torch.bmm(q_scaled, k.transpose(-2, -1))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 2.44 GiB. GPU 0 has a total capacity of 23.60 GiB of which 2.02 GiB is free. Including non-PyTorch memory, this process has 21.55 GiB memory in use. Of the allocated memory 21.01 GiB is allocated by PyTorch, and 250.25 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

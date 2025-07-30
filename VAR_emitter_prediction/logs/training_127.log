@@ -1,0 +1,17 @@
+INFO:__main__:Wandb logging disabled
+INFO:__main__:Total parameters: 14,875,916
+INFO:__main__:Trainable parameters: 14,875,916
+Using device: cuda (NVIDIA GeForce RTX 3090)
+GPU memory: 23.6 GB
+Current batch size: 8
+If you encounter CUDA out of memory errors, reduce batch_size in config file
+Traceback (most recent call last):
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 619, in <module>
+    trainer = VARTrainer(args.config)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 297, in __init__
+    self.setup_data()
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 357, in setup_data
+    input_resolution=tuple(data_config['input_resolution']),
+                           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+KeyError: 'input_resolution'

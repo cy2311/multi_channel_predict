@@ -101,10 +101,9 @@ class DECODEDataset(Dataset):
         indices = []
         
         for sample in self.samples:
-            # 每个样本可以生成多个连续帧序列
-            max_start_frame = self.frames_per_sample - self.consecutive_frames
-            for start_frame in range(0, max_start_frame, self.consecutive_frames):
-                indices.append((sample, start_frame))
+            # 每个原始样本只生成一个训练样本，从第0帧开始
+            start_frame = 0
+            indices.append((sample, start_frame))
         
         return indices
     
@@ -164,6 +163,16 @@ class DECODEDataset(Dataset):
         
         # 简单归一化到[0,1]
         frames = frames / (frames.max() + 1e-8)
+        
+        # 调整图像尺寸到指定大小
+        if self.image_size != frames.shape[1] or self.image_size != frames.shape[2]:
+            # 使用双线性插值调整尺寸
+            frames = torch.nn.functional.interpolate(
+                frames.unsqueeze(0), 
+                size=(self.image_size, self.image_size), 
+                mode='bilinear', 
+                align_corners=False
+            ).squeeze(0)
         
         return frames
     

@@ -1,0 +1,83 @@
+{
+  "model": {
+    "input_size": [
+      40,
+      40
+    ],
+    "target_sizes": [
+      [
+        80,
+        80
+      ],
+      [
+        160,
+        160
+      ]
+    ],
+    "base_channels": 64,
+    "embed_dim": 512,
+    "num_heads": 8,
+    "num_layers": 6,
+    "codebook_size": 1024,
+    "commitment_cost": 0.25
+  },
+  "training": {
+    "num_epochs": 100,
+    "batch_size": 8,
+    "num_workers": 4,
+    "train_val_split": 0.8,
+    "use_amp": true,
+    "log_interval": 10,
+    "save_interval": 5,
+    "progressive": true,
+    "warmup_epochs": 20,
+    "scale_schedule": "linear"
+  },
+  "loss": {
+    "count_weight": 1.0,
+    "loc_weight": 1.0,
+    "recon_weight": 0.1,
+    "uncertainty_weight": 0.5,
+    "scale_weights": [
+      0.8,
+      1.0
+    ]
+  },
+  "optimizer": {
+    "learning_rate": 0.0001,
+    "weight_decay": 1e-05,
+    "betas": [
+      0.9,
+      0.999
+    ]
+  },
+  "scheduler": {
+    "type": "cosine",
+    "min_lr": 1e-06,
+    "factor": 0.5,
+    "patience": 10
+  },
+  "data": {
+    "patch_size": [
+      40,
+      40
+    ],
+    "stride": [
+      20,
+      20
+    ],
+    "frame_window": 1,
+    "augmentation": {
+      "rotation": true,
+      "flip": true,
+      "noise": {
+        "enabled": true,
+        "std": 0.01
+      },
+      "brightness": {
+        "enabled": true,
+        "factor": 0.1
+      }
+    }
+  }
+}

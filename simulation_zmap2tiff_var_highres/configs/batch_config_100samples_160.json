@@ -1,0 +1,71 @@
+{
+  "description": "100个样本批量TIFF生成配置 - 160x160尺寸（保持与40x40相同物理尺寸）",
+  "version": "2.0",
+  
+  "base_output_dir": "outputs_100samples_160",
+  "max_workers": 4,
+
+  "base_config": {
+    "zmap_path": "/home/guest/Others/DECODE_rewrite/phase_retrieval_tiff2h5/result/result.h5",
+    
+    "emitters": {
+      "num_emitters": 5000,
+      "frames": 200,
+      "area_px": 160.0,
+      "intensity_mu": 7000.0,
+      "intensity_sigma": 3000.0,
+      "lifetime_avg": 1,
+      "z_range_um": 0.8,
+      "seed": 42,
+      "no_plot": true
+    },
+    
+    "zernike": {
+      "num_plot": 5,
+      "no_plot": true,
+      "interpolation_method": "cubic",
+      "crop_size": 160,
+      "crop_offset": [0, 0]
+    },
+    
+    "tiff": {
+      "filename": "simulation_160.ome.tiff",
+      "roi_size": 160,
+      "crop_offset": [0, 0],
+      "use_direct_rendering": true,
+      "add_noise": true,
+      "noise_params": {
+        "background": 6.25,
+        "readout_noise": 14.7,
+        "shot_noise": true
+      }
+    },
+    
+    "optical": {
+      "use_default_config": false,
+      "ignore_fixed_psf_coeffs": true,
+      "wavelength_nm": 660,
+      "pixel_size_nm_x": 25.2775,
+      "pixel_size_nm_y": 24.7075,
+      "NA": 1.4,
+      "n_medium": 1.518,
+      "psf_patch_size": 9,
+      "max_noll_coeffs": 21,
+      "defocus_noll_index": 4,
+      "ao_strength_factor": 0.05
+    },
+    
+    "output": {
+      "save_intermediate": true,
+      "save_emitters": true,
+      "save_zernike": true,
+      "save_tiff": true
+    }
+  },
+  
+  "sample_configs": {
+    "num_samples": 100,
+    "frames_per_sample": 200,
+    "sample_naming": "sample_160_{sample_id:03d}"
+  }
+}

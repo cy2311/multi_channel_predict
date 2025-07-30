@@ -1,0 +1,28 @@
+# Core deep learning framework
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Data handling and scientific computing
+numpy>=1.21.0
+scipy>=1.7.0
+h5py>=3.7.0
+tifffile>=2022.5.4
+Pillow>=9.0.0
+
+# Visualization and plotting
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Training utilities
+tensorboard>=2.8.0
+tqdm>=4.64.0
+
+# Optional: for better performance
+# nvidia-ml-py3>=7.352.0  # GPU monitoring
+# opencv-python>=4.5.0    # Additional image processing
+
+# Development and testing (optional)
+# pytest>=7.0.0
+# black>=22.0.0
+# flake8>=4.0.0

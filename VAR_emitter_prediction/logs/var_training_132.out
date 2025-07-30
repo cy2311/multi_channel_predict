@@ -1,0 +1,131 @@
+======================================
+🚀 VAR Emitter训练作业开始
+作业ID: 132
+节点: master
+开始时间: 2025年 07月 30日 星期三 14:16:49 CST
+======================================
+📊 系统信息:
+节点信息: master
+GPU信息:
+Wed Jul 30 14:16:49 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 555.52.04              Driver Version: 555.52.04      CUDA Version: 12.5     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 3090        Off |   00000000:31:00.0 Off |                  N/A |
+| 30%   32C    P8             17W /  350W |      12MiB /  24576MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA GeForce RTX 3090        Off |   00000000:4B:00.0 Off |                  N/A |
+| 30%   29C    P8             26W /  350W |      11MiB /  24576MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   2  NVIDIA GeForce RTX 3090        Off |   00000000:B1:00.0 Off |                  N/A |
+| 30%   31C    P8             17W /  350W |      11MiB /  24576MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   3  NVIDIA GeForce RTX 3090        Off |   00000000:CA:00.0 Off |                  N/A |
+| 30%   29C    P8             18W /  350W |      11MiB /  24576MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A      2071      G   /usr/lib/xorg/Xorg                              5MiB |
+|    1   N/A  N/A      2071      G   /usr/lib/xorg/Xorg                              4MiB |
+|    2   N/A  N/A      2071      G   /usr/lib/xorg/Xorg                              4MiB |
+|    3   N/A  N/A      2071      G   /usr/lib/xorg/Xorg                              4MiB |
++-----------------------------------------------------------------------------------------+
+内存信息:
+              total        used        free      shared  buff/cache   available
+Mem:          251Gi        11Gi       158Gi       5.0Mi        82Gi       238Gi
+Swap:          30Gi       246Mi        30Gi
+CPU信息:
+Model name:                         Intel(R) Xeon(R) Platinum 8358P CPU @ 2.60GHz
+Python版本:
+Python 3.11.7
+PyTorch版本:
+PyTorch: 2.7.1+cu118
+CUDA available: True
+CUDA version: 11.8
+======================================
+✅ 所有必要文件检查完成
+======================================
+🎯 开始VAR Emitter模型训练...
+配置文件: configs/config_true_var.json
+训练脚本: train_true_var.py
+======================================
+INFO:__main__:Wandb logging disabled
+INFO:__main__:Total parameters: 14,875,916
+INFO:__main__:Trainable parameters: 14,875,916
+INFO:__main__:Training samples: 1000
+INFO:__main__:Validation samples: 1000
+INFO:__main__:Starting VAR training...
+Using device: cuda (NVIDIA GeForce RTX 3090)
+GPU memory: 23.6 GB
+Current batch size: 1
+If you encounter CUDA out of memory errors, reduce batch_size in config file
+No sample directories found at data/train, using 1000 synthetic samples
+No sample directories found at data/val, using 1000 synthetic samples
+Epoch 0:   0%|          | 0/1000 [00:00<?, ?it/s]ERROR:__main__:CUDA out of memory error: CUDA out of memory. Tried to allocate 1.22 GiB. GPU 0 has a total capacity of 23.60 GiB of which 267.50 MiB is free. Including non-PyTorch memory, this process has 23.31 GiB memory in use. Of the allocated memory 21.95 GiB is allocated by PyTorch, and 1.06 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+ERROR:__main__:Try reducing batch_size in config file
+Epoch 0:   0%|          | 0/1000 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 623, in <module>
+    trainer.train()
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 531, in train
+    losses = self.train_step(batch)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 467, in train_step
+    raise e
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/train_true_var.py", line 452, in train_step
+    predictions = self.model(images)
+                  ^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/var_emitter_model_true.py", line 350, in forward
+    tokens = block(tokens, scale_cond)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/Others/DECODE_rewrite/VAR_emitter_prediction/var_emitter_model_true.py", line 165, in forward
+    attn_out, _ = self.attn(x_norm, x_norm, x_norm)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/modules/activation.py", line 1373, in forward
+    attn_output, attn_output_weights = F.multi_head_attention_forward(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/guest/anaconda3/lib/python3.11/site-packages/torch/nn/functional.py", line 6373, in multi_head_attention_forward
+    attn_output_weights = torch.bmm(q_scaled, k.transpose(-2, -1))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.22 GiB. GPU 0 has a total capacity of 23.60 GiB of which 267.50 MiB is free. Including non-PyTorch memory, this process has 23.31 GiB memory in use. Of the allocated memory 21.95 GiB is allocated by PyTorch, and 1.06 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+======================================
+✅ 训练成功完成!
+完成时间: 2025年 07月 30日 星期三 14:16:56 CST
+📊 训练结果统计:
+输出目录大小: 4.0K	outputs
+模型文件数量: 0
+TensorBoard日志: 544K	logs/tensorboard
+======================================
+🏁 作业结束时间: 2025年 07月 30日 星期三 14:16:56 CST
+总运行时间: 7 秒
+======================================
