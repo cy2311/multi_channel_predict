@@ -1,0 +1,60 @@
+{
+  "data": {
+    "batch_size": 16,
+    "num_workers": 4,
+    "image_size": 40,
+    "consecutive_frames": 3,
+    "sample_subset": null,
+    "train_val_split": 0.8
+  },
+  "training": {
+    "epochs": 1000,
+    "lr_first": 5e-4,
+    "lr_second": 5e-4,
+    "weight_decay": 1e-5,
+    "loss_type": "unified_decode",
+    "loss_weights": {
+      "count": 1.0,
+      "localization": 1.0,
+      "photon": 0.5,
+      "background": 0.1
+    },
+    "unified_loss_config": {
+      "channel_weights": [1.0, 1.0, 1.0, 1.0, 1.0, 0.5],
+      "pos_weight": 1.0,
+      "reduction": "mean"
+    },
+    "simple_combined_config": {
+      "count_weight": 1.0,
+      "loc_weight": 1.0,
+      "photon_weight": 1.0,
+      "bg_weight": 0.5,
+      "pos_weight": 1.0
+    },
+    "adaptive_lr_config": {
+      "enable_warmup": true,
+      "warmup_epochs": 10,
+      "warmup_start_lr": 1e-5,
+      "scheduler_type": "adaptive_plateau",
+      "plateau_patience": 50,
+      "plateau_factor": 0.7,
+      "plateau_min_lr": 1e-6,
+      "cosine_restart_periods": [100, 200, 300],
+      "adaptive_threshold": 0.001,
+      "loss_window_size": 20,
+      "lr_boost_factor": 1.5,
+      "lr_decay_factor": 0.8
+    }
+  },
+  "output": {
+    "save_dir": "outputs/training_results_adaptive"
+  },
+  "comments": {
+    "lr_improvements": "提高初始学习率5倍，从1e-4到5e-4",
+    "channel_weights_fix": "调整photon通道权重从0.5到1.0，提高重要性",
+    "adaptive_features": "新增自适应学习率配置，包括warmup、智能调度和动态调整",
+    "warmup_strategy": "前10个epoch进行学习率预热，从1e-5逐渐增加到5e-4",
+    "plateau_optimization": "优化ReduceLROnPlateau参数：patience=50, factor=0.7",
+    "adaptive_mechanism": "基于loss变化趋势的自适应调整机制"
+  }
+}

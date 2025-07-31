@@ -1,0 +1,9 @@
+训练总结:
+样本数: 100
+训练轮数: 1000
+批处理大小: 64
+学习率: 1e-4
+开始时间: 2025年 07月 30日 星期三 04:45:14 CST
+退出码: 0
+输出目录: /home/guest/Others/DECODE_rewrite/neuronal_network/training/outputs/train_100samples_20250729_171840
+TensorBoard端口: 6119

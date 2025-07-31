@@ -1,0 +1,44 @@
+{
+  "data": {
+    "batch_size": 16,
+    "num_workers": 4,
+    "image_size": 40,
+    "consecutive_frames": 3,
+    "sample_subset": null,
+    "train_val_split": 0.8
+  },
+  "training": {
+    "epochs": 1000,
+    "lr_first": 1e-4,
+    "lr_second": 1e-4,
+    "weight_decay": 1e-5,
+    "loss_type": "unified_decode",
+    "loss_weights": {
+      "count": 1.0,
+      "localization": 1.0,
+      "photon": 0.5,
+      "background": 0.1
+    },
+    "unified_loss_config": {
+      "channel_weights": [1.0, 1.0, 1.0, 1.0, 0.5, 0.1],
+      "pos_weight": 1.0,
+      "reduction": "mean"
+    },
+    "simple_combined_config": {
+      "count_weight": 1.0,
+      "loc_weight": 1.0,
+      "photon_weight": 0.5,
+      "bg_weight": 0.1,
+      "pos_weight": 1.0
+    }
+  },
+  "output": {
+    "save_dir": "outputs/training_results_fixed"
+  },
+  "comments": {
+    "loss_type": "可选值: 'unified_decode', 'simple_combined', 'original'",
+    "channel_weights": "统一损失函数的6通道权重: [prob, x, y, z, photon, bg]",
+    "pos_weight": "前景权重，用于平衡前景/背景，建议值1.0-3.0",
+    "weight_rationale": "权重设计基于DECODE原始实现，确保各损失项在相似数值范围内"
+  }
+}

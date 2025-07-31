@@ -1,0 +1,444 @@
+==================== 作业信息 ====================
+作业ID: 138
+作业名称: decode_adaptive_20250731_161216
+节点: master
+GPU: 0
+CPU核心数: 16
+内存: 32768 MB
+开始时间: 2025年 07月 31日 星期四 16:12:16 CST
+工作目录: /home/guest/Others/DECODE_rewrite/neuronal_network_lossOptim
+配置文件: training/configs/train_config_adaptive.json
+设备: cuda
+恢复训练: false
+仅监控模式: false
+=================================================
+\n==================== 系统检查 ====================
+主机名: master
+操作系统: Linux master 5.15.0-107-generic #117~20.04.1-Ubuntu SMP Tue Apr 30 10:35:57 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+磁盘空间:
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda4       409G  140G  249G  36% /
+\nGPU状态:
+0, NVIDIA GeForce RTX 3090, 24576, 12, 0
+1, NVIDIA GeForce RTX 3090, 24576, 11, 0
+2, NVIDIA GeForce RTX 3090, 24576, 11, 0
+3, NVIDIA GeForce RTX 3090, 24576, 11, 0
+\nPython环境:
+Python版本: Python 3.11.7
+PyTorch版本: 2.7.1+cu118
+CUDA可用性: True
+GPU数量: 1
+=================================================
+\n==================== 开始训练 ====================
+执行命令: python start_adaptive_training.py --config training/configs/train_config_adaptive.json
+=================================================
+🎯 DECODE自适应训练启动器
+============================================================
+启动时间: 2025-07-31 16:12:23
+🔍 检查运行环境...
+  Python版本: 3.11.7
+  PyTorch版本: 2.7.1+cu118
+  CUDA可用: True
+  GPU数量: 1
+  当前GPU: NVIDIA GeForce RTX 3090
+  ✅ numpy
+  ✅ matplotlib
+
+📁 检查数据可用性...
+  数据目录: /home/guest/Others/DECODE_rewrite/simulation_zmap2tiff/outputs_100samples_40
+  样本数量: 100
+  ✅ 数据充足
+
+📋 使用配置: training/configs/train_config_adaptive.json
+
+📂 输出目录: outputs/training_results_adaptive
+
+🚀 启动自适应训练...
+============================================================
+使用设备: cuda
+模型总参数量: 26,273,203
+损失函数初始化完成: unified_decode
+优化器初始化完成，初始学习率: 0.0005
+训练样本: 80, 验证样本: 20
+找到 80 个有效样本
+总共 80 个训练样本
+找到 20 个有效样本
+总共 20 个训练样本
+数据加载器初始化完成
+训练样本: 80, 验证样本: 20
+TensorBoard日志目录: outputs/training_results_adaptive/tensorboard
+开始自适应训练...
+Epoch 0, Batch 0/5, Loss: 48018.128906, LR: 5.00e-04
+Warmup阶段 - Epoch 0: LR 5.00e-04 -> 5.90e-05
+保存最佳模型，验证损失: 51035.052734
+Epoch    0/1000: Train Loss: 52114.857031, Val Loss: 51035.052734, LR: 1.00e-05, Best: 51035.052734
+Epoch 1, Batch 0/5, Loss: 48536.054688, LR: 1.00e-05
+Warmup阶段 - Epoch 1: LR 1.00e-05 -> 1.08e-04
+Epoch    1/1000: Train Loss: 51977.471094, Val Loss: 51047.724609, LR: 5.90e-05, Best: 51035.052734
+Epoch 2, Batch 0/5, Loss: 43038.675781, LR: 5.90e-05
+Warmup阶段 - Epoch 2: LR 5.90e-05 -> 1.57e-04
+Epoch    2/1000: Train Loss: 51939.800781, Val Loss: 51044.371094, LR: 1.08e-04, Best: 51035.052734
+Epoch 3, Batch 0/5, Loss: 57298.183594, LR: 1.08e-04
+Warmup阶段 - Epoch 3: LR 1.08e-04 -> 2.06e-04
+Epoch    3/1000: Train Loss: 51829.121094, Val Loss: 51041.759766, LR: 1.57e-04, Best: 51035.052734
+Epoch 4, Batch 0/5, Loss: 41684.691406, LR: 1.57e-04
+Warmup阶段 - Epoch 4: LR 1.57e-04 -> 2.55e-04
+保存最佳模型，验证损失: 50990.025391
+Epoch    4/1000: Train Loss: 51710.948438, Val Loss: 50990.025391, LR: 2.06e-04, Best: 50990.025391
+Epoch 5, Batch 0/5, Loss: 42345.691406, LR: 2.06e-04
+Warmup阶段 - Epoch 5: LR 2.06e-04 -> 3.04e-04
+保存最佳模型，验证损失: 50482.486328
+Epoch    5/1000: Train Loss: 51406.996875, Val Loss: 50482.486328, LR: 2.55e-04, Best: 50482.486328
+Epoch 6, Batch 0/5, Loss: 48258.625000, LR: 2.55e-04
+Warmup阶段 - Epoch 6: LR 2.55e-04 -> 3.53e-04
+保存最佳模型，验证损失: 49012.398438
+Epoch    6/1000: Train Loss: 50797.963281, Val Loss: 49012.398438, LR: 3.04e-04, Best: 49012.398438
+Epoch 7, Batch 0/5, Loss: 52114.007812, LR: 3.04e-04
+Warmup阶段 - Epoch 7: LR 3.04e-04 -> 4.02e-04
+保存最佳模型，验证损失: 47324.867188
+Epoch    7/1000: Train Loss: 49904.230469, Val Loss: 47324.867188, LR: 3.53e-04, Best: 47324.867188
+Epoch 8, Batch 0/5, Loss: 66256.398438, LR: 3.53e-04
+Warmup阶段 - Epoch 8: LR 3.53e-04 -> 4.51e-04
+保存最佳模型，验证损失: 45687.806641
+Epoch    8/1000: Train Loss: 48814.280469, Val Loss: 45687.806641, LR: 4.02e-04, Best: 45687.806641
+Epoch 9, Batch 0/5, Loss: 45779.523438, LR: 4.02e-04
+Warmup阶段 - Epoch 9: LR 4.02e-04 -> 5.00e-04
+保存最佳模型，验证损失: 45571.269531
+Epoch    9/1000: Train Loss: 47883.637500, Val Loss: 45571.269531, LR: 4.51e-04, Best: 45571.269531
+Epoch 10, Batch 0/5, Loss: 52700.464844, LR: 4.51e-04
+Epoch   10/1000: Train Loss: 47283.744531, Val Loss: 47440.195312, LR: 4.51e-04, Best: 45571.269531
+Epoch 11, Batch 0/5, Loss: 56919.324219, LR: 4.51e-04
+Epoch   11/1000: Train Loss: 46802.597656, Val Loss: 48358.228516, LR: 4.51e-04, Best: 45571.269531
+Epoch 12, Batch 0/5, Loss: 44796.941406, LR: 4.51e-04
+Epoch   12/1000: Train Loss: 46233.661719, Val Loss: 47793.996094, LR: 4.51e-04, Best: 45571.269531
+Epoch 13, Batch 0/5, Loss: 28197.068359, LR: 4.51e-04
+Epoch   13/1000: Train Loss: 45813.324609, Val Loss: 49594.458984, LR: 4.51e-04, Best: 45571.269531
+Epoch 14, Batch 0/5, Loss: 48377.929688, LR: 4.51e-04
+Epoch   14/1000: Train Loss: 45330.748828, Val Loss: 48666.541016, LR: 4.51e-04, Best: 45571.269531
+Epoch 15, Batch 0/5, Loss: 46332.492188, LR: 4.51e-04
+Epoch   15/1000: Train Loss: 45123.929688, Val Loss: 47497.406250, LR: 4.51e-04, Best: 45571.269531
+Epoch 16, Batch 0/5, Loss: 38957.632812, LR: 4.51e-04
+Epoch   16/1000: Train Loss: 45013.625781, Val Loss: 48864.781250, LR: 4.51e-04, Best: 45571.269531
+Epoch 17, Batch 0/5, Loss: 48363.648438, LR: 4.51e-04
+Epoch   17/1000: Train Loss: 44856.936328, Val Loss: 48846.335938, LR: 4.51e-04, Best: 45571.269531
+Epoch 18, Batch 0/5, Loss: 37226.015625, LR: 4.51e-04
+Epoch   18/1000: Train Loss: 44289.292188, Val Loss: 50047.343750, LR: 4.51e-04, Best: 45571.269531
+Epoch 19, Batch 0/5, Loss: 35893.789062, LR: 4.51e-04
+Epoch   19/1000: Train Loss: 44255.391406, Val Loss: 49381.992188, LR: 4.51e-04, Best: 45571.269531
+Epoch 20, Batch 0/5, Loss: 34773.781250, LR: 4.51e-04
+Epoch   20/1000: Train Loss: 43822.135156, Val Loss: 48640.091797, LR: 4.51e-04, Best: 45571.269531
+Epoch 21, Batch 0/5, Loss: 49620.742188, LR: 4.51e-04
+Epoch   21/1000: Train Loss: 43311.677344, Val Loss: 49315.619141, LR: 4.51e-04, Best: 45571.269531
+Epoch 22, Batch 0/5, Loss: 32745.341797, LR: 4.51e-04
+Epoch   22/1000: Train Loss: 43121.139453, Val Loss: 48455.386719, LR: 4.51e-04, Best: 45571.269531
+Epoch 23, Batch 0/5, Loss: 42050.808594, LR: 4.51e-04
+Epoch   23/1000: Train Loss: 42871.470703, Val Loss: 48454.554688, LR: 4.51e-04, Best: 45571.269531
+Epoch 24, Batch 0/5, Loss: 48176.531250, LR: 4.51e-04
+Epoch   24/1000: Train Loss: 42546.069531, Val Loss: 48712.308594, LR: 4.51e-04, Best: 45571.269531
+Epoch 25, Batch 0/5, Loss: 44874.609375, LR: 4.51e-04
+Epoch   25/1000: Train Loss: 42360.415234, Val Loss: 47610.048828, LR: 4.51e-04, Best: 45571.269531
+Epoch 26, Batch 0/5, Loss: 42861.203125, LR: 4.51e-04
+Epoch   26/1000: Train Loss: 42081.664453, Val Loss: 48860.167969, LR: 4.51e-04, Best: 45571.269531
+Epoch 27, Batch 0/5, Loss: 47316.136719, LR: 4.51e-04
+Epoch   27/1000: Train Loss: 41980.201172, Val Loss: 48829.539062, LR: 4.51e-04, Best: 45571.269531
+Epoch 28, Batch 0/5, Loss: 44799.734375, LR: 4.51e-04
+Epoch   28/1000: Train Loss: 41395.685156, Val Loss: 49409.224609, LR: 4.51e-04, Best: 45571.269531
+Epoch 29, Batch 0/5, Loss: 37293.199219, LR: 4.51e-04
+Epoch   29/1000: Train Loss: 41214.605469, Val Loss: 48893.443359, LR: 4.51e-04, Best: 45571.269531
+Epoch 30, Batch 0/5, Loss: 35289.906250, LR: 4.51e-04
+Epoch   30/1000: Train Loss: 40804.704688, Val Loss: 49798.205078, LR: 4.51e-04, Best: 45571.269531
+Epoch 31, Batch 0/5, Loss: 46661.511719, LR: 4.51e-04
+Epoch   31/1000: Train Loss: 40364.759766, Val Loss: 49332.660156, LR: 4.51e-04, Best: 45571.269531
+Epoch 32, Batch 0/5, Loss: 49077.824219, LR: 4.51e-04
+Epoch   32/1000: Train Loss: 39894.763281, Val Loss: 49857.916016, LR: 4.51e-04, Best: 45571.269531
+Epoch 33, Batch 0/5, Loss: 23715.019531, LR: 4.51e-04
+Epoch   33/1000: Train Loss: 39316.399219, Val Loss: 49077.652344, LR: 4.51e-04, Best: 45571.269531
+Epoch 34, Batch 0/5, Loss: 60210.417969, LR: 4.51e-04
+Epoch   34/1000: Train Loss: 38820.630078, Val Loss: 49036.626953, LR: 4.51e-04, Best: 45571.269531
+Epoch 35, Batch 0/5, Loss: 21933.488281, LR: 4.51e-04
+Epoch   35/1000: Train Loss: 38558.286328, Val Loss: 48895.722656, LR: 4.51e-04, Best: 45571.269531
+Epoch 36, Batch 0/5, Loss: 41111.406250, LR: 4.51e-04
+Epoch   36/1000: Train Loss: 38166.560937, Val Loss: 48896.496094, LR: 4.51e-04, Best: 45571.269531
+Epoch 37, Batch 0/5, Loss: 51399.144531, LR: 4.51e-04
+Epoch   37/1000: Train Loss: 38176.494531, Val Loss: 48597.634766, LR: 4.51e-04, Best: 45571.269531
+Epoch 38, Batch 0/5, Loss: 38781.449219, LR: 4.51e-04
+Epoch   38/1000: Train Loss: 37755.623437, Val Loss: 48847.824219, LR: 4.51e-04, Best: 45571.269531
+Epoch 39, Batch 0/5, Loss: 31458.939453, LR: 4.51e-04
+Epoch   39/1000: Train Loss: 37606.071484, Val Loss: 49153.199219, LR: 4.51e-04, Best: 45571.269531
+Epoch 40, Batch 0/5, Loss: 49304.011719, LR: 4.51e-04
+Epoch   40/1000: Train Loss: 37452.911719, Val Loss: 48606.451172, LR: 4.51e-04, Best: 45571.269531
+Epoch 41, Batch 0/5, Loss: 41001.031250, LR: 4.51e-04
+自适应调整 - decay: LR 4.51e-04 -> 3.61e-04 (factor: 0.8)
+Epoch   41/1000: Train Loss: 37417.042969, Val Loss: 49051.044922, LR: 3.61e-04, Best: 45571.269531
+Epoch 42, Batch 0/5, Loss: 36727.390625, LR: 3.61e-04
+自适应调整 - decay: LR 3.61e-04 -> 2.89e-04 (factor: 0.8)
+Epoch   42/1000: Train Loss: 37329.428906, Val Loss: 48683.380859, LR: 2.89e-04, Best: 45571.269531
+Epoch 43, Batch 0/5, Loss: 36394.617188, LR: 2.89e-04
+自适应调整 - decay: LR 2.89e-04 -> 2.31e-04 (factor: 0.8)
+Epoch   43/1000: Train Loss: 37036.528125, Val Loss: 49113.353516, LR: 2.31e-04, Best: 45571.269531
+Epoch 44, Batch 0/5, Loss: 30841.496094, LR: 2.31e-04
+自适应调整 - decay: LR 2.31e-04 -> 1.85e-04 (factor: 0.8)
+Epoch   44/1000: Train Loss: 36965.998047, Val Loss: 48590.960938, LR: 1.85e-04, Best: 45571.269531
+Epoch 45, Batch 0/5, Loss: 43830.558594, LR: 1.85e-04
+自适应调整 - decay: LR 1.85e-04 -> 1.48e-04 (factor: 0.8)
+Epoch   45/1000: Train Loss: 36849.736328, Val Loss: 48692.751953, LR: 1.48e-04, Best: 45571.269531
+Epoch 46, Batch 0/5, Loss: 24295.800781, LR: 1.48e-04
+自适应调整 - decay: LR 1.48e-04 -> 1.18e-04 (factor: 0.8)
+Epoch   46/1000: Train Loss: 36745.223828, Val Loss: 49004.078125, LR: 1.18e-04, Best: 45571.269531
+Epoch 47, Batch 0/5, Loss: 30369.203125, LR: 1.18e-04
+自适应调整 - decay: LR 1.18e-04 -> 9.46e-05 (factor: 0.8)
+Epoch   47/1000: Train Loss: 36689.719531, Val Loss: 48732.488281, LR: 9.46e-05, Best: 45571.269531
+Epoch 48, Batch 0/5, Loss: 33439.304688, LR: 9.46e-05
+自适应调整 - decay: LR 9.46e-05 -> 7.57e-05 (factor: 0.8)
+Epoch   48/1000: Train Loss: 36674.578906, Val Loss: 48771.964844, LR: 7.57e-05, Best: 45571.269531
+Epoch 49, Batch 0/5, Loss: 21786.039062, LR: 7.57e-05
+自适应调整 - decay: LR 7.57e-05 -> 6.05e-05 (factor: 0.8)
+Epoch   49/1000: Train Loss: 36639.789453, Val Loss: 48803.369141, LR: 6.05e-05, Best: 45571.269531
+Epoch 50, Batch 0/5, Loss: 44611.046875, LR: 6.05e-05
+自适应调整 - decay: LR 6.05e-05 -> 4.84e-05 (factor: 0.8)
+Epoch   50/1000: Train Loss: 36583.615625, Val Loss: 48827.525391, LR: 4.84e-05, Best: 45571.269531
+Epoch 51, Batch 0/5, Loss: 49759.039062, LR: 4.84e-05
+自适应调整 - decay: LR 4.84e-05 -> 3.87e-05 (factor: 0.8)
+Epoch   51/1000: Train Loss: 36654.821094, Val Loss: 48793.003906, LR: 3.87e-05, Best: 45571.269531
+Epoch 52, Batch 0/5, Loss: 41559.726562, LR: 3.87e-05
+自适应调整 - decay: LR 3.87e-05 -> 3.10e-05 (factor: 0.8)
+Epoch   52/1000: Train Loss: 36580.328516, Val Loss: 48790.515625, LR: 3.10e-05, Best: 45571.269531
+Epoch 53, Batch 0/5, Loss: 55026.199219, LR: 3.10e-05
+自适应调整 - decay: LR 3.10e-05 -> 2.48e-05 (factor: 0.8)
+Epoch   53/1000: Train Loss: 36591.365234, Val Loss: 48830.570312, LR: 2.48e-05, Best: 45571.269531
+Epoch 54, Batch 0/5, Loss: 45315.226562, LR: 2.48e-05
+自适应调整 - decay: LR 2.48e-05 -> 1.98e-05 (factor: 0.8)
+Epoch   54/1000: Train Loss: 36526.698047, Val Loss: 48825.474609, LR: 1.98e-05, Best: 45571.269531
+Epoch 55, Batch 0/5, Loss: 42348.925781, LR: 1.98e-05
+自适应调整 - decay: LR 1.98e-05 -> 1.59e-05 (factor: 0.8)
+Epoch   55/1000: Train Loss: 36538.716797, Val Loss: 48831.439453, LR: 1.59e-05, Best: 45571.269531
+Epoch 56, Batch 0/5, Loss: 43067.476562, LR: 1.59e-05
+自适应调整 - decay: LR 1.59e-05 -> 1.27e-05 (factor: 0.8)
+Epoch   56/1000: Train Loss: 36499.704688, Val Loss: 48843.876953, LR: 1.27e-05, Best: 45571.269531
+Epoch 57, Batch 0/5, Loss: 25558.916016, LR: 1.27e-05
+自适应调整 - decay: LR 1.27e-05 -> 1.02e-05 (factor: 0.8)
+Epoch   57/1000: Train Loss: 36484.113672, Val Loss: 48850.939453, LR: 1.02e-05, Best: 45571.269531
+Epoch 58, Batch 0/5, Loss: 40171.191406, LR: 1.02e-05
+自适应调整 - decay: LR 1.02e-05 -> 8.12e-06 (factor: 0.8)
+Epoch   58/1000: Train Loss: 36531.603516, Val Loss: 48823.054688, LR: 8.12e-06, Best: 45571.269531
+Epoch 59, Batch 0/5, Loss: 37852.449219, LR: 8.12e-06
+自适应调整 - decay: LR 8.12e-06 -> 6.50e-06 (factor: 0.8)
+Epoch   59/1000: Train Loss: 36480.257031, Val Loss: 48834.822266, LR: 6.50e-06, Best: 45571.269531
+Epoch 60, Batch 0/5, Loss: 33952.164062, LR: 6.50e-06
+自适应调整 - decay: LR 6.50e-06 -> 5.20e-06 (factor: 0.8)
+Epoch   60/1000: Train Loss: 36416.825000, Val Loss: 48841.363281, LR: 5.20e-06, Best: 45571.269531
+Epoch 61, Batch 0/5, Loss: 39916.851562, LR: 5.20e-06
+自适应调整 - decay: LR 5.20e-06 -> 4.16e-06 (factor: 0.8)
+Epoch   61/1000: Train Loss: 36451.424219, Val Loss: 48843.716797, LR: 4.16e-06, Best: 45571.269531
+Epoch 62, Batch 0/5, Loss: 36402.894531, LR: 4.16e-06
+自适应调整 - decay: LR 4.16e-06 -> 3.33e-06 (factor: 0.8)
+Epoch   62/1000: Train Loss: 36500.432422, Val Loss: 48830.822266, LR: 3.33e-06, Best: 45571.269531
+Epoch 63, Batch 0/5, Loss: 35696.449219, LR: 3.33e-06
+自适应调整 - decay: LR 3.33e-06 -> 2.66e-06 (factor: 0.8)
+Epoch   63/1000: Train Loss: 36425.697266, Val Loss: 48832.148438, LR: 2.66e-06, Best: 45571.269531
+Epoch 64, Batch 0/5, Loss: 31988.841797, LR: 2.66e-06
+自适应调整 - decay: LR 2.66e-06 -> 2.13e-06 (factor: 0.8)
+Epoch   64/1000: Train Loss: 36417.658984, Val Loss: 48835.777344, LR: 2.13e-06, Best: 45571.269531
+Epoch 65, Batch 0/5, Loss: 33725.652344, LR: 2.13e-06
+自适应调整 - decay: LR 2.13e-06 -> 1.70e-06 (factor: 0.8)
+Epoch   65/1000: Train Loss: 36450.965234, Val Loss: 48830.367188, LR: 1.70e-06, Best: 45571.269531
+Epoch 66, Batch 0/5, Loss: 38921.457031, LR: 1.70e-06
+自适应调整 - decay: LR 1.70e-06 -> 1.36e-06 (factor: 0.8)
+Epoch   66/1000: Train Loss: 36435.562500, Val Loss: 48834.234375, LR: 1.36e-06, Best: 45571.269531
+Epoch 67, Batch 0/5, Loss: 28424.533203, LR: 1.36e-06
+自适应调整 - decay: LR 1.36e-06 -> 1.09e-06 (factor: 0.8)
+Epoch   67/1000: Train Loss: 36462.701953, Val Loss: 48849.109375, LR: 1.09e-06, Best: 45571.269531
+Epoch 68, Batch 0/5, Loss: 45020.042969, LR: 1.09e-06
+自适应调整 - decay: LR 1.09e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   68/1000: Train Loss: 36498.702344, Val Loss: 48841.636719, LR: 1.00e-06, Best: 45571.269531
+Epoch 69, Batch 0/5, Loss: 21085.421875, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   69/1000: Train Loss: 36549.881250, Val Loss: 48829.330078, LR: 1.00e-06, Best: 45571.269531
+Epoch 70, Batch 0/5, Loss: 21807.242188, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   70/1000: Train Loss: 36480.537500, Val Loss: 48847.085938, LR: 1.00e-06, Best: 45571.269531
+Epoch 71, Batch 0/5, Loss: 32480.167969, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   71/1000: Train Loss: 36557.100781, Val Loss: 48838.394531, LR: 1.00e-06, Best: 45571.269531
+Epoch 72, Batch 0/5, Loss: 30589.162109, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   72/1000: Train Loss: 36529.211719, Val Loss: 48839.738281, LR: 1.00e-06, Best: 45571.269531
+Epoch 73, Batch 0/5, Loss: 43066.703125, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   73/1000: Train Loss: 36511.087891, Val Loss: 48832.974609, LR: 1.00e-06, Best: 45571.269531
+Epoch 74, Batch 0/5, Loss: 32252.062500, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   74/1000: Train Loss: 36401.690234, Val Loss: 48843.453125, LR: 1.00e-06, Best: 45571.269531
+Epoch 75, Batch 0/5, Loss: 45189.632812, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   75/1000: Train Loss: 36441.988281, Val Loss: 48837.642578, LR: 1.00e-06, Best: 45571.269531
+Epoch 76, Batch 0/5, Loss: 32742.486328, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   76/1000: Train Loss: 36535.155469, Val Loss: 48830.775391, LR: 1.00e-06, Best: 45571.269531
+Epoch 77, Batch 0/5, Loss: 36225.394531, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   77/1000: Train Loss: 36446.751172, Val Loss: 48837.318359, LR: 1.00e-06, Best: 45571.269531
+Epoch 78, Batch 0/5, Loss: 35309.570312, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   78/1000: Train Loss: 36412.315625, Val Loss: 48838.373047, LR: 1.00e-06, Best: 45571.269531
+Epoch 79, Batch 0/5, Loss: 34295.917969, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   79/1000: Train Loss: 36450.671875, Val Loss: 48850.437500, LR: 1.00e-06, Best: 45571.269531
+Epoch 80, Batch 0/5, Loss: 35266.796875, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   80/1000: Train Loss: 36461.596094, Val Loss: 48843.515625, LR: 1.00e-06, Best: 45571.269531
+Epoch 81, Batch 0/5, Loss: 38078.308594, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   81/1000: Train Loss: 36552.009375, Val Loss: 48851.673828, LR: 1.00e-06, Best: 45571.269531
+Epoch 82, Batch 0/5, Loss: 23751.427734, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   82/1000: Train Loss: 36500.370313, Val Loss: 48846.029297, LR: 1.00e-06, Best: 45571.269531
+Epoch 83, Batch 0/5, Loss: 36305.011719, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   83/1000: Train Loss: 36440.144141, Val Loss: 48848.013672, LR: 1.00e-06, Best: 45571.269531
+Epoch 84, Batch 0/5, Loss: 30634.134766, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   84/1000: Train Loss: 36502.678906, Val Loss: 48856.589844, LR: 1.00e-06, Best: 45571.269531
+Epoch 85, Batch 0/5, Loss: 31716.818359, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   85/1000: Train Loss: 36489.998828, Val Loss: 48841.857422, LR: 1.00e-06, Best: 45571.269531
+Epoch 86, Batch 0/5, Loss: 36793.691406, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   86/1000: Train Loss: 36443.596094, Val Loss: 48844.806641, LR: 1.00e-06, Best: 45571.269531
+Epoch 87, Batch 0/5, Loss: 25540.462891, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   87/1000: Train Loss: 36433.723047, Val Loss: 48851.648438, LR: 1.00e-06, Best: 45571.269531
+Epoch 88, Batch 0/5, Loss: 28699.380859, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   88/1000: Train Loss: 36483.812891, Val Loss: 48836.736328, LR: 1.00e-06, Best: 45571.269531
+Epoch 89, Batch 0/5, Loss: 29091.878906, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   89/1000: Train Loss: 36416.525781, Val Loss: 48850.826172, LR: 1.00e-06, Best: 45571.269531
+Epoch 90, Batch 0/5, Loss: 31971.507812, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   90/1000: Train Loss: 36590.702344, Val Loss: 48817.365234, LR: 1.00e-06, Best: 45571.269531
+Epoch 91, Batch 0/5, Loss: 54104.375000, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   91/1000: Train Loss: 36545.455469, Val Loss: 48821.476562, LR: 1.00e-06, Best: 45571.269531
+Epoch 92, Batch 0/5, Loss: 26257.324219, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   92/1000: Train Loss: 36451.907813, Val Loss: 48816.449219, LR: 1.00e-06, Best: 45571.269531
+Epoch 93, Batch 0/5, Loss: 36154.898438, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   93/1000: Train Loss: 36470.727734, Val Loss: 48832.267578, LR: 1.00e-06, Best: 45571.269531
+Epoch 94, Batch 0/5, Loss: 48249.652344, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   94/1000: Train Loss: 36491.863672, Val Loss: 48823.097656, LR: 1.00e-06, Best: 45571.269531
+Epoch 95, Batch 0/5, Loss: 34144.632812, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   95/1000: Train Loss: 36440.285547, Val Loss: 48817.109375, LR: 1.00e-06, Best: 45571.269531
+Epoch 96, Batch 0/5, Loss: 40236.691406, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   96/1000: Train Loss: 36466.283594, Val Loss: 48830.173828, LR: 1.00e-06, Best: 45571.269531
+Epoch 97, Batch 0/5, Loss: 52413.812500, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   97/1000: Train Loss: 36485.578906, Val Loss: 48836.626953, LR: 1.00e-06, Best: 45571.269531
+Epoch 98, Batch 0/5, Loss: 39172.789062, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   98/1000: Train Loss: 36415.633203, Val Loss: 48847.068359, LR: 1.00e-06, Best: 45571.269531
+Epoch 99, Batch 0/5, Loss: 26371.181641, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch   99/1000: Train Loss: 36491.382031, Val Loss: 48854.292969, LR: 1.00e-06, Best: 45571.269531
+Epoch 100, Batch 0/5, Loss: 27958.316406, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  100/1000: Train Loss: 36463.004687, Val Loss: 48861.787109, LR: 1.00e-06, Best: 45571.269531
+Epoch 101, Batch 0/5, Loss: 37286.570312, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  101/1000: Train Loss: 36410.084766, Val Loss: 48852.980469, LR: 1.00e-06, Best: 45571.269531
+Epoch 102, Batch 0/5, Loss: 25150.476562, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  102/1000: Train Loss: 36478.980078, Val Loss: 48821.306641, LR: 1.00e-06, Best: 45571.269531
+Epoch 103, Batch 0/5, Loss: 28066.138672, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  103/1000: Train Loss: 36476.611719, Val Loss: 48835.138672, LR: 1.00e-06, Best: 45571.269531
+Epoch 104, Batch 0/5, Loss: 32387.123047, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  104/1000: Train Loss: 36473.355078, Val Loss: 48839.412109, LR: 1.00e-06, Best: 45571.269531
+Epoch 105, Batch 0/5, Loss: 39832.117188, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  105/1000: Train Loss: 36440.088672, Val Loss: 48831.970703, LR: 1.00e-06, Best: 45571.269531
+Epoch 106, Batch 0/5, Loss: 39048.632812, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  106/1000: Train Loss: 36425.978516, Val Loss: 48825.457031, LR: 1.00e-06, Best: 45571.269531
+Epoch 107, Batch 0/5, Loss: 36101.835938, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  107/1000: Train Loss: 36477.908203, Val Loss: 48834.267578, LR: 1.00e-06, Best: 45571.269531
+Epoch 108, Batch 0/5, Loss: 34268.773438, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  108/1000: Train Loss: 36479.894531, Val Loss: 48829.941406, LR: 1.00e-06, Best: 45571.269531
+Epoch 109, Batch 0/5, Loss: 36077.675781, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  109/1000: Train Loss: 36411.355078, Val Loss: 48835.183594, LR: 1.00e-06, Best: 45571.269531
+Epoch 110, Batch 0/5, Loss: 29226.585938, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  110/1000: Train Loss: 36427.623047, Val Loss: 48843.554688, LR: 1.00e-06, Best: 45571.269531
+Epoch 111, Batch 0/5, Loss: 43440.363281, LR: 1.00e-06
+自适应调整 - decay: LR 1.00e-06 -> 1.00e-06 (factor: 0.8)
+Epoch  111/1000: Train Loss: 36452.093750, Val Loss: 48821.011719, LR: 1.00e-06, Best: 45571.269531
+早停：学习率过小且101个epoch无改善
+
+训练完成！
+总时间: 414.13秒
+最佳验证损失: 45571.269531
+最终学习率: 1.00e-06
+
+🎉 训练完成！
+最佳验证损失: 45571.269531
+训练时间: 414.13秒
+
+📊 训练完成，生成监控报告...
+
+📊 启动训练监控...
+============================================================
+自适应训练分析报告
+============================================================
+生成时间: 2025-07-31 16:19:22
+
+📊 训练基本信息:
+  总训练轮数: 112
+  当前epoch: 111
+
+📈 损失分析:
+  训练损失: 52114.857031 → 36452.093750
+  训练改善: 30.05%
+  验证损失: 51035.052734 → 48821.011719
+  验证改善: 4.34%
+  最佳验证损失: 45571.269531
+
+🎯 学习率分析:
+  学习率: 4.51e-04 → 1.00e-06
+  学习率调整次数: 28
+
+🔍 收敛状态:
+  当前状态: 正常
+  近期损失方差: 702.681284
+
+💡 优化建议:
+
+报告已保存: monitoring_outputs/training_report_20250731_161922.txt
+监控启动失败: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
+
+🎯 后续建议:
+1. 查看TensorBoard: tensorboard --logdir outputs/training_results_adaptive/tensorboard
+2. 运行监控脚本: python training/monitor_adaptive_training.py
+3. 检查最佳模型: outputs/training_results_adaptive/best_model.pth
+\n==================== 训练结果 ====================
+✅ 训练成功完成！
+📁 结果保存在: outputs/training_results_adaptive/
+📊 TensorBoard日志: outputs/training_results_adaptive/tensorboard/
+💾 检查点文件: outputs/training_results_adaptive/checkpoints/
+\n📂 输出文件列表:
+total 617092
+drwxrwxr-x 3 guest guest      4096 7月  31 15:54 .
+drwxrwxr-x 4 guest guest      4096 7月  31 15:51 ..
+-rw-rw-r-- 1 guest guest 315933707 7月  31 16:13 best_model.pth
+-rw-rw-r-- 1 guest guest 315949164 7月  31 16:19 latest_checkpoint.pth
+drwxrwxr-x 2 guest guest      4096 7月  31 16:12 tensorboard
+\n结束时间: 2025年 07月 31日 星期四 16:19:23 CST
+总运行时间: 427 秒
+=================================================
