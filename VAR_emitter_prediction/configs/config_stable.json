@@ -1,0 +1,61 @@
+{
+  "run_id": "stable_var_training",
+  "device": "cuda",
+  
+  "model": {
+    "input_size": 40,
+    "target_sizes": [40, 80, 160, 320],
+    "base_channels": 64,
+    "embed_dim": 512,
+    "num_heads": 8,
+    "num_layers": 12,
+    "codebook_size": 1024,
+    "embedding_dim": 256
+  },
+  
+  "loss": {
+    "use_unified_loss": true,
+    "channel_weights": [1.5, 1.0, 1.2, 1.2, 0.8, 0.8],
+    "pos_weight": 2.0,
+    "scale_weights": [0.1, 0.3, 0.6, 1.0],
+    "eps": 1e-4,
+    "warmup_epochs": 20
+  },
+  
+  "optimizer": {
+    "type": "adamw",
+    "lr": 1e-4,
+    "weight_decay": 1e-2,
+    "betas": [0.9, 0.999],
+    "eps": 1e-8
+  },
+  
+  "scheduler": {
+    "enabled": true,
+    "type": "cosine",
+    "min_lr": 1e-6
+  },
+  
+  "training": {
+    "epochs": 100,
+    "max_grad_norm": 1.0
+  },
+  
+  "data": {
+    "train_path": "data/train",
+    "val_path": "data/val",
+    "batch_size": 8,
+    "val_batch_size": 16,
+    "num_workers": 4,
+    "train_transform": null,
+    "val_transform": null
+  },
+  
+  "logging": {
+    "log_dir": "logs",
+    "save_frequency": 10
+  },
+  
+  "checkpoint_dir": "models",
+  "save_frequency": 10
+}

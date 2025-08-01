@@ -1,0 +1,23 @@
+Job started at: 2025年 08月 01日 星期五 21:56:09 CST
+Running on node: master
+CUDA devices: 0
+Resuming training from checkpoint: checkpoints/checkpoint_epoch_70.pth
+使用设备: cuda
+模型参数数量: 65,680,774
+2025-08-01 21:56:14,823 - neuronal_network_v2.utils.factories - INFO - 创建优化器: adam, 参数: {'lr': 0.0001, 'betas': (0.9, 0.999), 'eps': 1e-08, 'weight_decay': 1e-05}
+2025-08-01 21:56:14,823 - neuronal_network_v2.utils.factories - INFO - 创建调度器: cosineannealinglr, 参数: {'T_max': 100, 'eta_min': 1e-06}
+创建数据集...
+找到 100 个样本目录
+训练样本: 70, 验证样本: 20, 测试样本: 10
+找到训练数据文件: 70 个
+找到验证数据文件: 20 个
+Built index with 70 samples from 70 files
+Built index with 20 samples from 20 files
+训练批次数: 9, 验证批次数: 3
+2025-08-01 21:56:15,331 - neuronal_network_v2.training.utils - ERROR - 加载检查点失败: Weights only load failed. This file can still be loaded, to do so you have two options, [1mdo those steps only if you trust the source of the checkpoint[0m. 
+	(1) In PyTorch 2.6, we changed the default value of the `weights_only` argument in `torch.load` from `False` to `True`. Re-running `torch.load` with `weights_only` set to `False` will likely succeed, but it can result in arbitrary code execution. Do it only if you got the file from a trusted source.
+	(2) Alternatively, to load with `weights_only=True` please check the recommended steps in the following error message.
+	WeightsUnpickler error: Unsupported global: GLOBAL neuronal_network_v2.utils.config.TrainingConfig was not an allowed global by default. Please use `torch.serialization.add_safe_globals([neuronal_network_v2.utils.config.TrainingConfig])` or the `torch.serialization.safe_globals([neuronal_network_v2.utils.config.TrainingConfig])` context manager to allowlist this global if you trust this class/function.
+
+Check the documentation of torch.load to learn more about types accepted by default with weights_only https://pytorch.org/docs/stable/generated/torch.load.html.
+Job finished at: 2025年 08月 01日 星期五 21:56:16 CST

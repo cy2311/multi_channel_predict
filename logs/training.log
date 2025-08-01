@@ -1,0 +1,4 @@
+2025-08-01 20:35:32,249 - neuronal_network_v2.utils.factories - [31mERROR[0m - 导入模型失败: No module named 'neuronal_network_v2.models.unet'
+2025-08-01 20:36:08,289 - neuronal_network_v2.utils.factories - [31mERROR[0m - 创建模型失败: UNet2d.__init__() got an unexpected keyword argument 'input_channels'
+2025-08-01 20:37:17,600 - neuronal_network_v2.utils.factories - [31mERROR[0m - 创建损失函数失败: 不支持的损失函数: unified
+2025-08-01 20:37:45,831 - neuronal_network_v2.utils.factories - [31mERROR[0m - 创建损失函数失败: UnifiedLoss.__init__() got an unexpected keyword argument 'detection'

@@ -1,0 +1,129 @@
+# DECODE神经网络训练配置
+model:
+  architecture: "double_munet"
+  input_channels: 3  # 匹配3帧输入
+  output_channels: 6  # [p, photons, x, y, z, bg]
+  
+  # UNet参数 - 使用标准参数名
+  unet:
+    depth: 4
+    initial_features: 64
+    growth_factor: 2
+    
+  # 激活和归一化
+  activation: "relu"
+  norm_layer: "batch"
+  dropout_rate: 0.1
+
+data:
+  # 数据路径
+  data_root: "/home/guest/Others/DECODE_rewrite/simulation_zmap2tiff/outputs_100samples_40"
+  
+  # 数据格式
+  file_format: "tiff"  # TIFF格式
+  target_format: "h5"   # 目标数据在HDF5中
+  
+  # 数据分割
+  train_ratio: 0.7
+  val_ratio: 0.2
+  test_ratio: 0.1
+  
+  # 预处理
+  preprocessing:
+    normalize: true
+    normalize_method: "minmax"  # 或 "zscore"
+    
+  # 数据增强
+  augmentation:
+    enabled: false
+    rotation: false
+    flip: false
+    noise_augmentation: false
+    
+  # 像素参数
+  pixel_size_x: 101.11  # nm
+  pixel_size_y: 98.83   # nm
+  
+  # 物理参数
+  z_range: [-400, 400]  # nm
+  intensity_range: [100, 10000]
+  
+  # 加载参数
+  batch_size: 8
+  num_workers: 4
+  pin_memory: true
+
+optimization:
+  # 优化器
+  optimizer: "adam"
+  lr: 0.0001
+  weight_decay: 0.00001
+  
+  # 学习率调度
+  scheduler:
+    type: "cosineannealinglr"
+    T_max: 100
+    eta_min: 0.000001
+
+training:
+  # 训练参数
+  epochs: 100
+  save_interval: 10
+  validation_interval: 5
+  
+  # 早停
+  early_stopping:
+    enabled: true
+    patience: 15
+    min_delta: 1e-4
+    
+  # 检查点
+  checkpoint:
+    save_best: true
+    save_last: true
+    
+  # 设备
+  device: "cuda"  # 或 "cpu"
+  mixed_precision: true
+
+evaluation:
+  # 评估指标
+  metrics:
+    - "mse"
+    - "mae"
+    - "jaccard"
+    - "detection_rate"
+    
+  # 评估参数
+  detection_threshold: 0.5
+  nms_threshold: 0.3
+  
+# 损失函数
+loss:
+  type: "unifiedloss"  # 使用统一损失函数
+  loss_configs:
+    - name: "ppxyzb"
+      type: "ppxyzb"
+      weight: 1.0
+      kwargs:
+        chweight_stat: [1.0, 0.1, 5.0, 5.0, 2.0, 0.01]
+        p_fg_weight: 1.0
+        reduction: "mean"
+    - name: "regularization"
+      type: "l1"
+      weight: 0.01
+      schedule:
+        type: "warmup"
+        start_weight: 0.0
+        end_weight: 0.01
+    
+# 日志和监控
+logging:
+  log_dir: "logs"
+  tensorboard: true
+  wandb: false
+  
+# 输出
+output:
+  model_dir: "models"
+  results_dir: "results"
