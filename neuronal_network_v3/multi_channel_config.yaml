@@ -1,0 +1,189 @@
+# 多通道DECODE网络训练配置
+# 基于DECODE_Network_Analysis.md文档的多通道扩展设计
+
+# 模型配置
+model:
+  # SigmaMUNet配置（双通道）
+  n_inp: 1  # 单通道输入
+  n_out: 10  # 10通道输出（p, N, x_mu, x_sig, y_mu, y_sig, z_mu, z_sig, bg_mu, bg_sig）
+  
+  sigma_munet_params:
+    depth: 3
+    initial_features: 64
+    norm: "batch"
+    activation: "relu"
+    final_activation: "sigmoid"  # 检测概率通道
+    separate_heads: true  # 分离的输出头
+  
+  # RatioNet配置
+  ratio_net:
+    input_channels: 20  # 两个通道的特征（2 * 10）
+    hidden_dim: 128
+    num_layers: 3
+    dropout: 0.1
+    uncertainty_quantification: true
+
+# 损失函数配置
+loss:
+  type: "gaussian_mm"  # 或 "ppxyzb"
+  
+  # 高斯混合模型损失参数
+  gaussian_mm_params:
+    weight_bg: 1.0
+    weight_gmm: 10.0
+    
+  # 比例损失参数
+  ratio_params:
+    photon_conservation_weight: 1.0
+    ratio_consistency_weight: 0.5
+    uncertainty_regularization: 0.1
+    
+  # 联合损失参数
+  joint_params:
+    channel_loss_weight: 1.0
+    ratio_loss_weight: 0.5
+    conservation_weight: 0.3
+    consistency_weight: 0.2
+
+# 训练配置
+training:
+  # 三阶段训练
+  stage1_epochs: 100  # 双通道独立训练
+  stage2_epochs: 50   # 比例网络训练
+  stage3_epochs: 30   # 联合微调
+  
+  # 优化器配置
+  optimizer:
+    lr: 1e-3
+    weight_decay: 1e-4
+    
+  # 批处理配置
+  batch_size: 16
+  num_workers: 4
+  
+  # 验证配置
+  validation_frequency: 5  # 每5个epoch验证一次
+  early_stopping_patience: 20
+  
+  # 模型保存
+  save_best_model: true
+  save_checkpoint_frequency: 10
+
+# 数据配置
+data:
+  # 数据路径
+  train_path: "data/train_multi_channel.h5"
+  val_path: "data/val_multi_channel.h5"
+  test_path: "data/test_multi_channel.h5"
+  
+  # 数据参数
+  patch_size: 64
+  pixel_size: 100  # nm
+  photon_threshold: 50
+  
+  # 比例计算
+  ratio_method: "photon_based"  # 或 "intensity_based"
+  add_noise_to_ratio: true
+  ratio_noise_std: 0.01
+  
+  # 物理约束
+  enforce_conservation: true
+  conservation_tolerance: 0.05
+  
+  # 数据增强（仅训练时）
+  augmentation:
+    random_rotation: true
+    rotation_degrees: 90
+    random_flip: true
+    flip_probability: 0.5
+    gaussian_noise: true
+    noise_std: 0.01
+    
+  # 归一化
+  normalization:
+    channel1_mean: 0.0
+    channel1_std: 1.0
+    channel2_mean: 0.0
+    channel2_std: 1.0
+
+# 评估配置
+evaluation:
+  # 评估指标
+  metrics:
+    - "detection_precision"
+    - "detection_recall"
+    - "detection_f1"
+    - "localization_rmse"
+    - "photon_mae"
+    - "ratio_mae"
+    - "ratio_coverage_95"
+    - "conservation_error"
+    - "ratio_consistency"
+    
+  # 不确定性评估
+  uncertainty_evaluation:
+    calibration_bins: 10
+    coverage_levels: [0.68, 0.95, 0.99]
+    
+  # 可视化
+  visualization:
+    save_plots: true
+    plot_frequency: 10
+    
+# 推理配置
+inference:
+  # 批处理推理
+  batch_size: 32
+  overlap: 0.1  # 重叠区域比例
+  
+  # 物理约束应用
+  apply_conservation: true
+  apply_consistency: true
+  
+  # 不确定性阈值
+  uncertainty_threshold: 0.1
+  
+  # 后处理
+  post_processing:
+    nms_threshold: 0.3
+    confidence_threshold: 0.5
+    
+# 硬件配置
+hardware:
+  device: "cuda"  # 或 "cpu"
+  mixed_precision: true
+  gradient_clipping: 1.0
+  
+# 日志配置
+logging:
+  level: "INFO"
+  save_logs: true
+  log_frequency: 10
+  
+  # TensorBoard
+  tensorboard:
+    enabled: true
+    log_dir: "logs/multi_channel"
+    
+  # Weights & Biases
+  wandb:
+    enabled: false
+    project: "decode_multi_channel"
+    
+# 实验配置
+experiment:
+  name: "multi_channel_decode"
+  version: "v1.0"
+  description: "Multi-channel DECODE with uncertainty quantification"
+  
+  # 随机种子
+  seed: 42
+  
+  # 输出目录
+  output_dir: "outputs/multi_channel"
+  
+  # 标签
+  tags:
+    - "multi_channel"
+    - "uncertainty_quantification"
+    - "physical_constraints"

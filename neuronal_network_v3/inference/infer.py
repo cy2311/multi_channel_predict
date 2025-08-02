@@ -72,7 +72,8 @@ class Infer:
         self.optimal_batch_size = None
         if self.auto_batch:
             self._find_optimal_batch_size()
-    
+
+
     def infer_single(self,
                     input_data: Union[torch.Tensor, np.ndarray],
                     return_raw: bool = False,
@@ -509,3 +510,7 @@ class BatchInfer(Infer):
                 pickle.dump(results, f)
         
         self.logger.info(f"Results saved to {output_path}")
+
+
+# 为了向后兼容，添加ModelInfer别名
+ModelInfer = Infer

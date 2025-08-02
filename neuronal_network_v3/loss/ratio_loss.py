@@ -54,8 +54,12 @@ class RatioGaussianNLLLoss(nn.Module):
         ratio_var = torch.exp(ratio_log_var)
         nll_loss = self.gaussian_nll(ratio_mean, target_ratio, ratio_var)
         
+        # 确保nll_loss是标量
+        if isinstance(nll_loss, torch.Tensor) and nll_loss.numel() > 1:
+            nll_loss = nll_loss.mean()
+        
         total_loss = nll_loss
-        loss_dict = {'nll_loss': nll_loss.item() if nll_loss.dim() == 0 else nll_loss.mean().item()}
+        loss_dict = {'nll_loss': nll_loss.item() if hasattr(nll_loss, 'item') else float(nll_loss)}
         
         # 可选的物理约束正则项
         if photons_ch1 is not None and photons_ch2 is not None:
@@ -155,14 +159,24 @@ class MultiChannelLossWithGaussianRatio(nn.Module):
         
         # 处理损失函数返回值
         if isinstance(loss_ch1, dict):
-            loss_ch1_value = loss_ch1['total_loss'] if 'total_loss' in loss_ch1 else loss_ch1['mean_total_loss']
+            loss_ch1_value = loss_ch1['mean_total_loss'] if 'mean_total_loss' in loss_ch1 else loss_ch1['total_loss']
+            # 确保是标量
+            if isinstance(loss_ch1_value, torch.Tensor) and loss_ch1_value.numel() > 1:
+                loss_ch1_value = loss_ch1_value.mean()
         else:
             loss_ch1_value = loss_ch1
+            if isinstance(loss_ch1_value, torch.Tensor) and loss_ch1_value.numel() > 1:
+                loss_ch1_value = loss_ch1_value.mean()
             
         if isinstance(loss_ch2, dict):
-            loss_ch2_value = loss_ch2['total_loss'] if 'total_loss' in loss_ch2 else loss_ch2['mean_total_loss']
+            loss_ch2_value = loss_ch2['mean_total_loss'] if 'mean_total_loss' in loss_ch2 else loss_ch2['total_loss']
+            # 确保是标量
+            if isinstance(loss_ch2_value, torch.Tensor) and loss_ch2_value.numel() > 1:
+                loss_ch2_value = loss_ch2_value.mean()
         else:
             loss_ch2_value = loss_ch2
+            if isinstance(loss_ch2_value, torch.Tensor) and loss_ch2_value.numel() > 1:
+                loss_ch2_value = loss_ch2_value.mean()
         
         # 提取光子数用于物理约束（假设在通道1）
         photons_ch1 = pred_ch1[:, 1] if pred_ch1.shape[1] > 1 else None
@@ -177,9 +191,13 @@ class MultiChannelLossWithGaussianRatio(nn.Module):
         # 总损失
         total_loss = loss_ch1_value + loss_ch2_value + self.ratio_loss_weight * ratio_loss
         
+        # 确保total_loss是标量
+        if isinstance(total_loss, torch.Tensor) and total_loss.numel() > 1:
+            total_loss = total_loss.mean()
+        
         # 构建损失字典
         loss_dict = {
-            'total_loss': total_loss.item() if total_loss.dim() == 0 else total_loss.mean().item(),
+            'total_loss': total_loss.item() if hasattr(total_loss, 'item') else float(total_loss),
             'ch1_loss': loss_ch1_value.item() if hasattr(loss_ch1_value, 'item') else float(loss_ch1_value),
             'ch2_loss': loss_ch2_value.item() if hasattr(loss_ch2_value, 'item') else float(loss_ch2_value),
             'ratio_loss': ratio_loss.item() if ratio_loss.dim() == 0 else ratio_loss.mean().item()

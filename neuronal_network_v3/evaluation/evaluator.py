@@ -88,7 +88,7 @@ class ModelEvaluator:
         self.model.eval()
         
         # 创建推理器
-        self.infer = Infer(model, post_processor, device=str(self.device))
+        self.infer = Infer(model, device=self.device, post_processor=post_processor)
         
         logger.info(f"模型评估器初始化完成，使用设备: {self.device}")
     

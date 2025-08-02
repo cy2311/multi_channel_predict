@@ -14,6 +14,38 @@ import warnings
 
 
 @dataclass
+class SegmentationMetrics:
+    """分割指标
+    
+    Attributes:
+        iou: 交并比
+        dice: Dice系数
+        pixel_accuracy: 像素准确率
+        mean_iou: 平均交并比
+    """
+    iou: float = 0.0
+    dice: float = 0.0
+    pixel_accuracy: float = 0.0
+    mean_iou: float = 0.0
+
+
+@dataclass
+class RegressionMetrics:
+    """回归指标
+    
+    Attributes:
+        mse: 均方误差
+        mae: 平均绝对误差
+        rmse: 均方根误差
+        r2_score: R²分数
+    """
+    mse: float = 0.0
+    mae: float = 0.0
+    rmse: float = 0.0
+    r2_score: float = 0.0
+
+
+@dataclass
 class DetectionMetrics:
     """检测指标
     
@@ -589,3 +621,31 @@ def calculate_roc_curve(predicted_probs: np.ndarray,
     fpr, tpr, thresholds = roc_curve(ground_truth_binary, predicted_probs)
     auc_score = auc(fpr, tpr)
     return fpr, tpr, thresholds, auc_score
+
+
+@dataclass
+class RegressionMetrics:
+    """回归指标
+    
+    Attributes:
+        mse: 均方误差
+        rmse: 均方根误差
+        mae: 平均绝对误差
+        r2: 决定系数
+        correlation: 相关系数
+    """
+    mse: float = 0.0
+    rmse: float = 0.0
+    mae: float = 0.0
+    r2: float = 0.0
+    correlation: float = 0.0
+    
+    def to_dict(self) -> Dict[str, float]:
+        """转换为字典"""
+        return {
+            'mse': self.mse,
+            'rmse': self.rmse,
+            'mae': self.mae,
+            'r2': self.r2,
+            'correlation': self.correlation
+        }

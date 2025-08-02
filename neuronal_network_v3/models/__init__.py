@@ -11,10 +11,13 @@ from .unet2d import UNet2d
 from .double_munet import DoubleMUnet
 from .sigma_munet import SigmaMUNet
 from .simple_smlm_net import SimpleSMLMNet
+from .ratio_net import RatioNet, FeatureExtractor
 
 __all__ = [
     'UNet2d',
-    'DoubleMUnet',
-    'SigmaMUNet', 
-    'SimpleSMLMNet'
+    'DoubleMUnet', 
+    'SigmaMUNet',
+    'SimpleSMLMNet',
+    'RatioNet',
+    'FeatureExtractor'
 ]

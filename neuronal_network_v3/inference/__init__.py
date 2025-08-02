@@ -7,29 +7,12 @@
 - 结果解析器
 """
 
-from .infer import Infer, BatchInfer
-from .post_processing import PostProcessor, PeakFinder, EmitterExtractor
-from .result_parser import ResultParser, EmitterResult, DetectionResult
-from .utils import auto_batch_size, memory_efficient_inference
+from .infer import ModelInfer, BatchInfer
+from .multi_channel_infer import MultiChannelInfer, MultiChannelBatchInfer
 
 __all__ = [
-    # 推理器
-    'Infer',
+    'ModelInfer',
     'BatchInfer',
-    'LiveInfer',
-    'StreamInfer',
-    
-    # 后处理
-    'PostProcessor',
-    'PeakFinder',
-    'EmitterExtractor',
-    
-    # 结果解析
-    'ResultParser',
-    'EmitterResult',
-    'DetectionResult',
-    
-    # 工具
-    'auto_batch_size',
-    'memory_efficient_inference'
+    'MultiChannelInfer',
+    'MultiChannelBatchInfer'
 ]

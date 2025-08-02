@@ -16,12 +16,19 @@ from .metrics import (
     calculate_detection_metrics,
     calculate_localization_metrics,
     calculate_photon_metrics,
-    calculate_comprehensive_metrics
+    calculate_comprehensive_metrics,
+    SegmentationMetrics,
+    RegressionMetrics
 )
 
 from .evaluator import (
     ModelEvaluator,
     BenchmarkEvaluator
+)
+
+from .multi_channel_evaluation import (
+    MultiChannelEvaluation,
+    RatioEvaluationMetrics
 )
 
 from .visualizer import (
@@ -49,6 +56,10 @@ __all__ = [
     'calculate_localization_metrics',
     'calculate_photon_metrics',
     'calculate_comprehensive_metrics',
+    'SegmentationMetrics',
+    'RegressionMetrics',
+    'MultiChannelEvaluation',
+    'RatioEvaluationMetrics',
     
     # 评估器
     'ModelEvaluator',

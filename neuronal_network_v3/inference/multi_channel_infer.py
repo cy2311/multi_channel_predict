@@ -59,19 +59,20 @@ class MultiChannelInfer:
         self.infer_ch1 = Infer(self.model_ch1, device=device)
         self.infer_ch2 = Infer(self.model_ch2, device=device)
     
-    def forward(self, input_data: torch.Tensor) -> Dict[str, torch.Tensor]:
-        """前向推理
+    def predict(self, ch1_data: torch.Tensor, ch2_data: torch.Tensor) -> Dict[str, torch.Tensor]:
+        """双通道预测
         
         Args:
-            input_data: 输入数据，形状为 (B, C, H, W)
+            ch1_data: 通道1输入数据，形状为 (B, 1, H, W)
+            ch2_data: 通道2输入数据，形状为 (B, 1, H, W)
             
         Returns:
             包含所有预测结果的字典
         """
         with torch.no_grad():
             # 分别进行通道预测
-            pred_ch1 = self.model_ch1(input_data)
-            pred_ch2 = self.model_ch2(input_data)
+            pred_ch1 = self.model_ch1(ch1_data)
+            pred_ch2 = self.model_ch2(ch2_data)
             
             # 提取特征用于比例预测
             ch1_features = self.feature_extractor(pred_ch1)
@@ -92,6 +93,24 @@ class MultiChannelInfer:
             
             return final_pred
     
+    def forward(self, input_data: torch.Tensor) -> Dict[str, torch.Tensor]:
+        """前向推理（兼容性方法）
+        
+        Args:
+            input_data: 输入数据，形状为 (B, C, H, W)，其中C=2
+            
+        Returns:
+            包含所有预测结果的字典
+        """
+        if input_data.shape[1] == 2:
+            # 分离两个通道
+            ch1_data = input_data[:, 0:1, :, :]
+            ch2_data = input_data[:, 1:2, :, :]
+            return self.predict(ch1_data, ch2_data)
+        else:
+            # 单通道输入，复制到两个通道
+            return self.predict(input_data, input_data)
+    
     def _apply_constraints(self, 
                           pred_ch1: torch.Tensor, 
                           pred_ch2: torch.Tensor, 
@@ -110,15 +129,18 @@ class MultiChannelInfer:
         
         # 提取光子数预测（假设在第1个通道）
         if pred_ch1.shape[1] > 1 and pred_ch2.shape[1] > 1:
-            photons_ch1 = pred_ch1[:, 1]  
-            photons_ch2 = pred_ch2[:, 1]
+            photons_ch1 = pred_ch1[:, 1]  # (B, H, W)
+            photons_ch2 = pred_ch2[:, 1]  # (B, H, W)
             
             # 计算总光子数
-            total_photons = photons_ch1 + photons_ch2
+            total_photons = photons_ch1 + photons_ch2  # (B, H, W)
+            
+            # 调整ratio_mean的形状以匹配空间维度
+            ratio_mean_expanded = ratio_mean.squeeze(-1).unsqueeze(-1).unsqueeze(-1)  # (B, 1, 1)
             
             # 根据比例均值重新分配
-            corrected_ch1 = total_photons * ratio_mean.squeeze()
-            corrected_ch2 = total_photons * (1 - ratio_mean.squeeze())
+            corrected_ch1 = total_photons * ratio_mean_expanded
+            corrected_ch2 = total_photons * (1 - ratio_mean_expanded)
             
             # 更新预测结果
             final_pred_ch1 = pred_ch1.clone()

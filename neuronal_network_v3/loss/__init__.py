@@ -9,9 +9,12 @@
 from .ppxyzb_loss import PPXYZBLoss
 from .gaussian_mm_loss import GaussianMMLoss
 from .unified_loss import UnifiedLoss
+from .ratio_loss import RatioGaussianNLLLoss, MultiChannelLossWithGaussianRatio
 
 __all__ = [
     'PPXYZBLoss',
     'GaussianMMLoss',
-    'UnifiedLoss'
+    'UnifiedLoss',
+    'RatioGaussianNLLLoss',
+    'MultiChannelLossWithGaussianRatio'
 ]
