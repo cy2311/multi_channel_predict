@@ -1,0 +1,29 @@
+Job started at: 2025年 08月 02日 星期六 12:07:15 CST
+Running on node: master
+CUDA devices: 0
+Python path: /home/guest/Others/DECODE_rewrite:
+Working directory: /home/guest/Others/DECODE_rewrite/neuronal_network_v2
+CUDA available: True
+GPU count: 1
+Current device: 0
+Starting training...
+使用设备: cuda
+模型参数数量: 65,680,774
+2025-08-02 12:07:22,716 - neuronal_network_v2.utils.factories - INFO - 创建优化器: adam, 参数: {'lr': 0.0001, 'betas': (0.9, 0.999), 'eps': 1e-08, 'weight_decay': 1e-05}
+2025-08-02 12:07:22,716 - neuronal_network_v2.utils.factories - INFO - 创建调度器: cosineannealinglr, 参数: {'T_max': 100, 'eta_min': 1e-06}
+创建数据集...
+找到 100 个样本目录
+训练样本: 70, 验证样本: 20, 测试样本: 10
+找到训练数据文件: 70 个
+找到验证数据文件: 20 个
+Built index with 70 samples from 70 files
+Built index with 20 samples from 20 files
+训练批次数: 9, 验证批次数: 3
+开始训练...
+2025-08-02 12:07:22,733 - DECODE_Trainer - INFO - Starting training for 1000 epochs
+2025-08-02 12:07:22,733 - DECODE_Trainer - INFO - Device: cuda
+2025-08-02 12:07:22,734 - DECODE_Trainer - INFO - Model parameters: 65,680,774
+2025-08-02 12:07:33,974 - DECODE_Trainer - INFO - Epoch 1/N/A - 8.39s - train_loss: 0.739580 - val_loss: 0.709997 - lr: 1.00e-04
+2025-08-02 12:07:37,241 - DECODE_Trainer - INFO - Saved best model to checkpoints/best_model.pth
+2025-08-02 12:07:46,404 - DECODE_Trainer - INFO - Epoch 2/N/A - 9.16s - train_loss: 0.591664 - val_loss: 0.591664 - lr: 9.99e-05
+2025-08-02 12:07:49,784 - DECODE_Trainer - INFO - Saved best model to checkpoints/best_model.pth

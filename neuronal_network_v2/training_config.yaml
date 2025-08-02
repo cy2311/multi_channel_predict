@@ -67,9 +67,9 @@ optimization:
 
 training:
   # 训练参数
-  epochs: 100
-  save_interval: 10
-  validation_interval: 5
+  epochs: 1000
+  save_interval: 100
+  validation_interval: 20
   
   # 早停
   early_stopping:

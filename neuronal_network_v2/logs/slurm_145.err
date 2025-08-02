@@ -1,0 +1,8 @@
+2025-08-02 12:07:22,733 - DECODE_Trainer - INFO - Starting training for 1000 epochs
+2025-08-02 12:07:22,733 - DECODE_Trainer - INFO - Device: cuda
+2025-08-02 12:07:22,734 - DECODE_Trainer - INFO - Model parameters: 65,680,774
+2025-08-02 12:07:33,974 - DECODE_Trainer - INFO - Epoch 1/N/A - 8.39s - train_loss: 0.739580 - val_loss: 0.709997 - lr: 1.00e-04
+2025-08-02 12:07:37,241 - DECODE_Trainer - INFO - Saved best model to checkpoints/best_model.pth
+2025-08-02 12:07:46,404 - DECODE_Trainer - INFO - Epoch 2/N/A - 9.16s - train_loss: 0.591664 - val_loss: 0.591664 - lr: 9.99e-05
+2025-08-02 12:07:49,784 - DECODE_Trainer - INFO - Saved best model to checkpoints/best_model.pth
+slurmstepd: error: *** JOB 145 ON master CANCELLED AT 2025-08-02T12:07:51 ***
