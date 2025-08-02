@@ -7,6 +7,9 @@ nn_train_loc_back/
 beads/
 uiPSF/
 VAR/
+neuronal_network/runs/
+neuronal_network_v2/runs/
+neuronal_network_v3/runs/
 
 # 屏蔽特定文件
 emitters.h5

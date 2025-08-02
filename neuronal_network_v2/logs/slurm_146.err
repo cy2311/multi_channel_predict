@@ -1006,3 +1006,21 @@
 2025-08-02 14:33:33,261 - DECODE_Trainer - INFO - Epoch 910/N/A - 8.16s - train_loss: 0.800112 - val_loss: 0.858941 - lr: 3.42e-06
 2025-08-02 14:33:35,112 - DECODE_Trainer - INFO - Saved checkpoint to checkpoints/checkpoint_epoch_910.pth
 2025-08-02 14:33:46,518 - DECODE_Trainer - INFO - Epoch 911/N/A - 8.55s - train_loss: 0.848482 - val_loss: 0.858944 - lr: 3.93e-06
+2025-08-02 14:33:54,667 - DECODE_Trainer - INFO - Epoch 912/N/A - 8.15s - train_loss: 0.848497 - val_loss: 0.858940 - lr: 4.48e-06
+2025-08-02 14:34:03,599 - DECODE_Trainer - INFO - Epoch 913/N/A - 8.93s - train_loss: 0.848488 - val_loss: 0.858953 - lr: 5.07e-06
+2025-08-02 14:34:11,824 - DECODE_Trainer - INFO - Epoch 914/N/A - 8.22s - train_loss: 0.848489 - val_loss: 0.858986 - lr: 5.71e-06
+2025-08-02 14:34:21,088 - DECODE_Trainer - INFO - Epoch 915/N/A - 9.26s - train_loss: 0.848486 - val_loss: 0.858978 - lr: 6.40e-06
+2025-08-02 14:34:30,039 - DECODE_Trainer - INFO - Epoch 916/N/A - 8.95s - train_loss: 0.848519 - val_loss: 0.859013 - lr: 7.12e-06
+2025-08-02 14:34:38,615 - DECODE_Trainer - INFO - Epoch 917/N/A - 8.57s - train_loss: 0.836378 - val_loss: 0.715854 - lr: 7.89e-06
+2025-08-02 14:34:47,386 - DECODE_Trainer - INFO - Epoch 918/N/A - 8.77s - train_loss: 0.735402 - val_loss: 0.858995 - lr: 8.71e-06
+2025-08-02 14:34:55,887 - DECODE_Trainer - INFO - Epoch 919/N/A - 8.50s - train_loss: 0.848553 - val_loss: 0.858965 - lr: 9.56e-06
+2025-08-02 14:35:04,045 - DECODE_Trainer - INFO - Epoch 920/N/A - 8.16s - train_loss: 0.848559 - val_loss: 0.859034 - lr: 1.05e-05
+2025-08-02 14:35:05,907 - DECODE_Trainer - INFO - Saved checkpoint to checkpoints/checkpoint_epoch_920.pth
+2025-08-02 14:35:18,110 - DECODE_Trainer - INFO - Epoch 921/N/A - 8.50s - train_loss: 0.848551 - val_loss: 0.859034 - lr: 1.14e-05
+2025-08-02 14:35:26,317 - DECODE_Trainer - INFO - Epoch 922/N/A - 8.21s - train_loss: 0.848572 - val_loss: 0.859093 - lr: 1.24e-05
+2025-08-02 14:35:34,478 - DECODE_Trainer - INFO - Epoch 923/N/A - 8.16s - train_loss: 0.848548 - val_loss: 0.859028 - lr: 1.34e-05
+2025-08-02 14:35:43,431 - DECODE_Trainer - INFO - Epoch 924/N/A - 8.95s - train_loss: 0.848603 - val_loss: 0.859127 - lr: 1.44e-05
+2025-08-02 14:35:51,643 - DECODE_Trainer - INFO - Epoch 925/N/A - 8.21s - train_loss: 0.848652 - val_loss: 0.859055 - lr: 1.55e-05
+2025-08-02 14:36:00,030 - DECODE_Trainer - INFO - Epoch 926/N/A - 8.39s - train_loss: 0.707160 - val_loss: 0.744654 - lr: 1.66e-05
+2025-08-02 14:36:08,718 - DECODE_Trainer - INFO - Epoch 927/N/A - 8.69s - train_loss: 0.848717 - val_loss: 0.859112 - lr: 1.78e-05
+2025-08-02 14:36:16,876 - DECODE_Trainer - INFO - Epoch 928/N/A - 8.16s - train_loss: 0.848817 - val_loss: 0.858962 - lr: 1.89e-05
