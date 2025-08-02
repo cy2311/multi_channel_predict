@@ -17,7 +17,8 @@ memory_log.csv
 phase_retrieval_gs.py
 
 # Ignore TensorBoard log files and other large training outputs
-*/runs/
+neuronal_network_v2/runs/
+neuronal_network_v3/runs/
 *.tfevents.*
 checkpoints/
 *.pth
